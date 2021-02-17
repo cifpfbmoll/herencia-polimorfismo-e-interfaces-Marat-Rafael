@@ -120,11 +120,47 @@ public class Libro {
         return "Libro{" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", numCopias=" + numCopias + ", numCopiasDisponibles=" + numCopiasDisponibles + '}';
     }
 
-
     
+    /**
+     * metodo para mostrar todos libros de la biblioteca
+     * @param listaLibros 
+     */
     public static void mostrarTodosLibros(ArrayList <Libro> listaLibros){
         for (int i = 0; i < listaLibros.size(); i++) {
             System.out.println(listaLibros.get(i).toString());           
         }       
-    }    
+    }  
+    
+    /**
+     * metodo para mostrar libros si estan disponibles, > 0
+     * @param listaLibros 
+     */
+    public static void mostrarLibrosDisponibles(ArrayList<Libro> listaLibros){
+        
+        for (int i = 0; i < listaLibros.size(); i++) {
+            if(listaLibros.get(i).getNumCopiasDisponibles()>0){
+                System.out.println(listaLibros.get(i).toString());
+            }          
+        }
+    }// fin metodo mostrar librosDisponibles
+    
+    /**
+     * metodo para comprobar si libro indicado existe en la lista
+     * si existe devuelve su posicion ,
+     * si no existe devuelve -1
+     * @param isbnBuscado
+     * @param listaLibros
+     * @return posicion en la lista
+     */
+    public static int confirmarLibro(String isbnBuscado, ArrayList<Libro> listaLibros){
+        int posicion = -1;
+        for (int i = 0; i < listaLibros.size(); i++) {
+            if(listaLibros.get(i).getISBN().equals(isbnBuscado)){
+                posicion = i;
+                return posicion;
+            }           
+        }
+        return posicion;
+    }// fin metodo confirmarLibro
+    
 }

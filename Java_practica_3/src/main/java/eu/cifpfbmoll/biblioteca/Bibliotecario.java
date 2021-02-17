@@ -14,7 +14,8 @@ import java.util.Scanner;
  * @author Marat Rafael
  */
 public class Bibliotecario extends Persona {
-    static Scanner sc= new Scanner(System.in);
+
+    static Scanner sc = new Scanner(System.in);
 
     private String puestoTrabajo;
     private String NIF;
@@ -59,22 +60,6 @@ public class Bibliotecario extends Persona {
         this.contrasenia = bibliotecario.contrasenia;
     }
 
-    /**
-     * metodo constructor que recibe como parametro una persona , mas atributos
-     * del bibliotecario
-     *
-     * @param puestoTrabajo
-     * @param NIF
-     * @param contrasenia
-     * @param persona le pasamo como parametro una persona ya existente
-     */
-    public Bibliotecario(String puestoTrabajo, String NIF, String contrasenia, Persona persona) {
-        // super para aceder a los atributos de la persona
-        super(persona.nombre, persona.apellido1, persona.apellido2,persona.edad);
-        this.puestoTrabajo = puestoTrabajo;
-        this.NIF = NIF;
-        this.contrasenia = contrasenia;
-    }
 
     //GETTER/SETTER
     public String getPuestoTrabajo() {
@@ -119,6 +104,7 @@ public class Bibliotecario extends Persona {
      *
      * @return bibliotecario
      */
+    /* obsoleto , para borrar
     @Override
     public Bibliotecario solicitarDatosPersona() {
         // creamos instancia de persona nuevaPersona la que recibe caracteristicas del metodo padre
@@ -136,6 +122,26 @@ public class Bibliotecario extends Persona {
         // devuelvo una instancia creada del bibliotecario
         return nuevoBibliotecario;
     }//fin metodo solicitarDatosPersona
+     */
+    /**
+     * metodo para rellenar datos del Bibliotecario
+     */
+    @Override
+    public void solicitarDatosPersona() {
+        // primero llamamos alpadre y rellenamos dato de la persona
+        super.solicitarDatosPersona();
+        // solicitamos datos del bibliotecario
+        System.out.println("Puesto de trabajo: ");
+        String nuevoPuestoTrabajo = sc.nextLine();
+        System.out.println("NIF: ");
+        String nuevoNIF = sc.nextLine();
+        System.out.println("Contraseña: ");
+        String nuevaContrasenia = sc.nextLine();
+        // inserteamos datos a la instancia del Bibliotecario
+        this.setPuestoTrabajo(nuevoPuestoTrabajo);
+        this.setNIF(nuevoNIF);
+        this.setContrasenia(nuevaContrasenia);
+    }
 
     /**
      * metodo para ver si bibliotecario existe en la lista
@@ -164,7 +170,7 @@ public class Bibliotecario extends Persona {
             }
         }
         return false;
-    }// fin metodo accesoBibliotecarioBoolean
+    } // fin metodo accesoBibliotecarioBoolean
 
     public void mostrarTodosBibliotecarios(ArrayList<Persona> listaPersonas) {
 
@@ -232,10 +238,8 @@ public class Bibliotecario extends Persona {
         }
 
     }// fin metodo buscar BibliotecarioNif
-    
-    
-       
-        /**
+
+    /**
      * El método ​ reservarLibro​ , pedirá al usuario el teléfono y el correo
      * electrónico, si coincide, le permitirá realizar la reserva, y por tanto,
      * solicitará el ISBN del libro, y en consecuencia quedará completa la
@@ -244,13 +248,53 @@ public class Bibliotecario extends Persona {
      * disponibles, y obviamente se debe tener en cuenta que no podrá reservar
      * si no hay unidades disponibles.
      */
-    public void reservarLibro(ArrayList<Libro> listaLibros,ArrayList <Persona> listaPersonas) {
-        int indicePersona;
+    public void reservarLibro(ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
+        int numeroCopias;
+        int posicion = -1;
+        // aqui guardamos la posicion de la persona que va hacer reserva
+        int indiceUsuario = confirmarUsuario(listaPersonas);
+        if (indiceUsuario != -1) {
+            // si usuario existecreamos objeto Usuario y rellenamos con datos del ArrayList
+            Usuario usuario = new Usuario();
+            usuario = (Usuario) listaPersonas.get(indiceUsuario);
+            System.out.println(usuario.toString());
 
-        
+            // comprobamos que tiene reservas menos que 5
+            if (usuario.librosControl()) {
+                // solicitamos libro que quere reservar
+                System.out.println("Tiene menos de 5 reservas puede solicitar un libro");
+                System.out.println("ISBN: ");
+                String isbnBuscado = sc.nextLine();
+                
+                // llamamos metodo que nos devuelve posicion del libro
+                posicion = Libro.confirmarLibro(isbnBuscado, listaLibros);
+                
+                if(posicion == -1){
+                    System.out.println("No se encuentra libro con ISBN "+isbnBuscado);
+                    
+                }else{
+                    System.out.println("Encontramos un libro con ISBN indicado ");
+                    System.out.println(listaLibros.get(posicion).toString()); 
+                    
+                    Libro libroReservado = listaLibros.get(posicion);
+                    
+                    // accedemos a numero de copias
+                    numeroCopias = listaLibros.get(posicion).getNumCopiasDisponibles();
+                    // restamos uno
+                    numeroCopias = numeroCopias-1;
+                    // modificamos en la lista de libros
+                    listaLibros.get(posicion).setNumCopiasDisponibles(numeroCopias);
+                    
+                }              
+                
+            }
+
+        }
+
     }
 
     /**
+     * metodo para confirmar que usuario esta ne la lista de personas
      *
      * @param listaPersonas
      */

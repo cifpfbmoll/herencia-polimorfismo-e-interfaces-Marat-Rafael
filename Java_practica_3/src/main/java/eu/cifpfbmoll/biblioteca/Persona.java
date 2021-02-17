@@ -66,7 +66,7 @@ public abstract class Persona {
         return edad;
     }
 
-    public void setEdad(byte edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
 
@@ -82,7 +82,7 @@ public abstract class Persona {
      * los datos y devuelve una Persona.
      *
      * @return persona
-     */
+     
     public Persona solicitarDatosPersona() {
         System.out.println("Nombre: ");
         String nuevoNombre = sc.nextLine();
@@ -98,4 +98,30 @@ public abstract class Persona {
         // devolvemos persona
         return nuevaPersona;
     }//fin metodo solicitarDatosPersona
+    */
+    
+        /**
+     * un método llamado ​ solicitarDatosPersona de la clase Persona, 
+     * rellena datos de una persona existente
+     *
+     * @return persona
+     */
+    public void solicitarDatosPersona() {
+        System.out.println("Nombre: ");
+        String nuevoNombre = sc.nextLine();
+        System.out.println("Primer apellido: ");
+        String nuevoApellido1 = sc.nextLine();
+        System.out.println("Segundo apellido: ");
+        String nuevoApellido2 = sc.nextLine();
+        System.out.println("Edad: ");
+        int nuevoEdad = sc.nextInt();
+        sc.nextLine();
+        // rellenamos datos de la persona
+        this.setNombre(nuevoNombre);
+        this.setApellido1(nuevoApellido1);
+        this.setApellido2(nuevoApellido2);
+        this.setEdad(nuevoEdad);
+    }//fin metodo solicitarDatosPersona
+    
+    
 }

@@ -79,7 +79,8 @@ public class AppBiblioteca {
         Usuario u2 = new Usuario(new ArrayList<Reserva>(), "22222", "caratera Militar 122", "07592", "antonio@gmail.com", "Antonio", "Garcia", "Serrano", 23);
         Usuario u3 = new Usuario(new ArrayList<Reserva>(), "33333", "plaza Paris 45", "07232", "david@gmail.com", "David", "Fernandez", "Goya", 43);
         Usuario u4 = new Usuario(new ArrayList<Reserva>(), "44444", "calle Matamorros 33", "07698", "fernando@gmail.com", "Fernando", "Rey", "Velazquez", 24);
-        Usuario u5 = new Usuario(new ArrayList<Reserva>(), "55555", "plaza Mayor 3", "07114", "rafael@gmail.com", "Rafael", "Guion", "Profesor", 36);
+        Usuario u5 = new Usuario(new ArrayList<Reserva>(), "55555", "plaza Mayor 3", "07114", "rafael@gmail.com", "Rafael", "Guion", "Muñoz", 36);
+        Usuario u6 = new Usuario(new ArrayList<Reserva>(), "1", "1", "1", "1", "Rafael", "Guion", "Muñoz", 36);
 
         //añadimos a la lista de personas
         miBiblioteca.getListaPersonas().add(u1);
@@ -87,6 +88,7 @@ public class AppBiblioteca {
         miBiblioteca.getListaPersonas().add(u3);
         miBiblioteca.getListaPersonas().add(u4);
         miBiblioteca.getListaPersonas().add(u5);
+        miBiblioteca.getListaPersonas().add(u6);
 
         boolean salirMenu = false;
         boolean salirBibliotecario = false;
@@ -126,15 +128,16 @@ public class AppBiblioteca {
                             byte opcionBibliotecario = sc.nextByte();
                             sc.nextLine();
                             switch (opcionBibliotecario) {
-                                case 1:
+                                case 1:// añadir nuevo bibliotecario
                                     // creamos instancia vacia
                                     Bibliotecario nuevoBibliotecario = new Bibliotecario();
-                                    // metodo nos devuelve un Bibliotecario
-                                    nuevoBibliotecario = nuevoBibliotecario.solicitarDatosPersona();
+                                    // metodo nos rellena datos del bibliotecario
+                                    nuevoBibliotecario.solicitarDatosPersona();
                                     // añadimos nuevoBibliotecario a la lista
                                     miBiblioteca.getListaPersonas().add(nuevoBibliotecario);
                                     break;
-                                case 2:// mostramos todos bilotecarios de la lista
+                                case 2:
+                                    // mostramos todos bilotecarios de la lista
                                     Bibliotecario.mostrarTodosBibliotecarios(miBiblioteca.getListaPersonas());
                                     break;
                                 case 3:
@@ -142,27 +145,33 @@ public class AppBiblioteca {
                                     Bibliotecario.borrarBibliotecario(miBiblioteca.getListaPersonas());
                                     break;
                                 case 4:
-                                    //Libro.confirmarUsuario(miBiblioteca.getListaPersonas());
+                                    // Reservar Libro
+                                    Bibliotecario.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
+                                    
                                     break;
 
                                 case 5:
-
+                                    // devolver libro
+                                    
                                     break;
                                 case 6:
+                                    // mostrar todos libros
                                     Libro.mostrarTodosLibros(miBiblioteca.getListaLibros());
                                     break;
 
                                 case 7:
-
+                                    // mostrar libros disponibles
+                                    Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
                                     break;
                                 case 8:
-
+                                    // añadir libro a la biblioteca
                                     break;
 
                                 case 9:
-
+                                    // eliminar libro de la biblioteca
                                     break;
                                 case 0:
+                                    // salir
                                     salirBibliotecario = true;
                                     break;
 

@@ -73,29 +73,7 @@ public class Usuario extends Persona {
         this.correoElectronico = usuario.correoElectronico;
         this.listaReservas = usuario.listaReservas;
     }
-    /**
-     * constructor con un parametro Persona ya existente, mas con todos atributos
-     * @param persona
-     * @param telefono
-     * @param direccion
-     * @param codigoPostal
-     * @param correoElectronico
-     * @param listaReservas 
-     */
-    public Usuario( Persona persona,
-                    String telefono, 
-                    String direccion, 
-                    String codigoPostal, 
-                    String correoElectronico, 
-                    ArrayList<Reserva> listaReservas) {
-        // con super copiamos todos atributos de la persona
-        super(persona.nombre,persona.apellido1,persona.apellido2, persona.edad);
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.codigoPostal = codigoPostal;
-        this.correoElectronico = correoElectronico;
-        this.listaReservas = listaReservas;
-    }
+
     
     //GETTER/SETTER
 
@@ -143,7 +121,8 @@ public class Usuario extends Persona {
     public String toString() {
         return super.toString()+" Usuario{" + "telefono=" + telefono + ", direccion=" + direccion + ", codigo Postal=" + codigoPostal + ", correo Electronico=" + correoElectronico + ", listaReservas=" + listaReservas + '}'; 
     }
-
+/*
+    obsoleto, para borrar
     @Override
     public Persona solicitarDatosPersona() {
         //solicitarDatosPersona del padre nos devuelve una persona lo almacenamos en nueva variable
@@ -163,7 +142,31 @@ public class Usuario extends Persona {
         Usuario nuevoUsuario = new Usuario(nuevaPersona,nuevoTelefono, nuevoDireccion, nuevoCodigoPostal, nuevoCorreoElectronico, nuevaListaReseva);
         return nuevoUsuario;
     }//fin metodo solicitarDatosPersona
-
+*/
+    /**
+     * metodo para completar datos del Usuario existente
+     */
+    @Override
+    public void solicitarDatosPersona() {
+        // primero llamamos al padre y rellenamos campos de la persona
+        super.solicitarDatosPersona(); 
+        System.out.println("Telefono: ");
+        String nuevoTelefono = sc.nextLine();
+        System.out.println("Direccion: ");
+        String nuevoDireccion = sc.nextLine();
+        System.out.println("Codigo postal: ");
+        String nuevoCodigoPostal = sc.nextLine();
+        System.out.println("Correo electronico");
+        String nuevoCorreoElectronico=sc.nextLine();
+        
+        // insertamos datos indicados al Usuario
+        this.setTelefono(nuevoTelefono);
+        this.setDireccion(nuevoDireccion);
+        this.setCodigoPostal(nuevoCodigoPostal);
+        this.setCorreoElectronico(nuevoCorreoElectronico);
+        
+    }
+    
 
     // metodo para controlar que no haya mas de 5 libros reservados
     /**

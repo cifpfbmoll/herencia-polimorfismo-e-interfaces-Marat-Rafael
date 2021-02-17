@@ -14,27 +14,44 @@ import java.util.ArrayList;
 public class Reserva {
 
     //ATRIBUTOS
+    private static int IDreserva; // estatica , comun para todos
+    private int id;// individual
     private ArrayList<Libro> libro;
     private String fechaReserva;
     private String horaReserva;
 
     //CONSTRUCTORES
     public Reserva() {
+        IDreserva++; //a la hora de crear reserva aumenta en uno
+        id = IDreserva; // y su valor se guarda en variable id
     }
 
     public Reserva(ArrayList<Libro> libro, String fechaReserva, String horaReserva) {
+        IDreserva++;
+        id = IDreserva;
         this.libro = libro;
         this.fechaReserva = fechaReserva;
         this.horaReserva = horaReserva;
     }
 
     public Reserva(Reserva reserva) {
+        IDreserva++;
+        id = IDreserva;
         this.libro = reserva.libro;
         this.fechaReserva = reserva.fechaReserva;
         this.horaReserva = reserva.horaReserva;
     }
     //GETTER/SETTER
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
     public ArrayList<Libro> getLibro() {
         return libro;
     }
@@ -63,8 +80,5 @@ public class Reserva {
     public String toString() {
         return "Reserva{" + "libro=" + libro + ", fechaReserva=" + fechaReserva + ", horaReserva=" + horaReserva + '}';
     }
-    
-    
-    
-    
+
 }//FIN CLASS
