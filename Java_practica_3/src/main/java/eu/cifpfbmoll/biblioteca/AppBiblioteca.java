@@ -142,7 +142,7 @@ public class AppBiblioteca {
                                     Bibliotecario.borrarBibliotecario(miBiblioteca.getListaPersonas());
                                     break;
                                 case 4:
-
+                                    //Libro.confirmarUsuario(miBiblioteca.getListaPersonas());
                                     break;
 
                                 case 5:

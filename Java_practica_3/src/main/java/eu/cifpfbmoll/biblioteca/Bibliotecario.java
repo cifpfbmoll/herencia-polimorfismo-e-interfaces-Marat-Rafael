@@ -7,12 +7,14 @@ toString (NO imprimirá los datos de la superclase).
 package eu.cifpfbmoll.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author Marat Rafael
  */
 public class Bibliotecario extends Persona {
+    static Scanner sc= new Scanner(System.in);
 
     private String puestoTrabajo;
     private String NIF;
@@ -230,5 +232,49 @@ public class Bibliotecario extends Persona {
         }
 
     }// fin metodo buscar BibliotecarioNif
+    
+    
+       
+        /**
+     * El método ​ reservarLibro​ , pedirá al usuario el teléfono y el correo
+     * electrónico, si coincide, le permitirá realizar la reserva, y por tanto,
+     * solicitará el ISBN del libro, y en consecuencia quedará completa la
+     * información de la reserva (revisa la clase Reserva). Debes tener en
+     * cuenta que debes actualizar la clase Libro, con la información de libros
+     * disponibles, y obviamente se debe tener en cuenta que no podrá reservar
+     * si no hay unidades disponibles.
+     */
+    public void reservarLibro(ArrayList<Libro> listaLibros,ArrayList <Persona> listaPersonas) {
+        int indicePersona;
+
+        
+    }
+
+    /**
+     *
+     * @param listaPersonas
+     */
+    public static int confirmarUsuario(ArrayList<Persona> listaPersonas) {
+        int posicion = -1;
+        System.out.println("Indica telefono del usuario: ");
+        String telefonoBuscar = sc.nextLine();
+        System.out.println("Indica correo del usuario: ");
+        String mailBuscar = sc.nextLine();
+        for (int i = 0; i < listaPersonas.size(); i++) {
+            // recorremos array buscando Usuarios
+            if (listaPersonas.get(i) instanceof Usuario) {
+                // hacemos casting y comparamos datos
+                if (((Usuario) listaPersonas.get(i)).getTelefono().equalsIgnoreCase(telefonoBuscar)
+                        && ((Usuario) listaPersonas.get(i)).getCorreoElectronico().equals(mailBuscar)) {
+
+                    System.out.println(" Usuario confirmado");
+                    posicion = i;
+                    return posicion;
+                }
+            }
+        }
+        System.out.println("Usuario no confirmado");
+        return posicion;
+    }// fin metodo confirmarUsuario
 
 }//fin class Bibliotecario

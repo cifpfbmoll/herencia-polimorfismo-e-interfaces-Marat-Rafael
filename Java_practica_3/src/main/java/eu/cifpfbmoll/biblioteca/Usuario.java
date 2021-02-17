@@ -7,14 +7,16 @@ superclase).
  */
 package eu.cifpfbmoll.biblioteca;
 
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author Marat Rafael
  */
 public class Usuario extends Persona {
-
+    static Scanner sc = new Scanner(System.in);
     //Atributos
     private String telefono;
     private String direccion;
@@ -175,7 +177,6 @@ public class Usuario extends Persona {
         }
         return false;
     }// finmetodo librosControl
-    
-    
+ 
 
 }// fin classe Usuario

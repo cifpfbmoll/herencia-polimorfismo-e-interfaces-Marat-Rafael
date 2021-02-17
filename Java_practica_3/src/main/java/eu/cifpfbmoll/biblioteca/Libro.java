@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class Libro {
 
-    Scanner sc = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
     //ATRIBUTOS
     private static int contador;
     private String ISBN;
@@ -120,47 +120,7 @@ public class Libro {
         return "Libro{" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", numCopias=" + numCopias + ", numCopiasDisponibles=" + numCopiasDisponibles + '}';
     }
 
-    /**
-     * El método ​ reservarLibro​ , pedirá al usuario el teléfono y el correo
-     * electrónico, si coincide, le permitirá realizar la reserva, y por tanto,
-     * solicitará el ISBN del libro, y en consecuencia quedará completa la
-     * información de la reserva (revisa la clase Reserva). Debes tener en
-     * cuenta que debes actualizar la clase Libro, con la información de libros
-     * disponibles, y obviamente se debe tener en cuenta que no podrá reservar
-     * si no hay unidades disponibles.
-     */
-    public void reservarLibro(ArrayList<Libro> listaLibros,ArrayList <Persona> listaPersonas) {
-        int indicePersona;
 
-        
-    }
-
-    /**
-     *
-     * @param listaPersonas
-     */
-    public int confirmarUsuario(ArrayList<Persona> listaPersonas) {
-        int posicion = -1;
-        System.out.println("Indica telefono del usuario: ");
-        String telefonoBuscar = sc.nextLine();
-        System.out.println("Indica correo del usuario: ");
-        String mailBuscar = sc.nextLine();
-        for (int i = 0; i < listaPersonas.size(); i++) {
-            // recorremos array buscando Usuarios
-            if (listaPersonas.get(i) instanceof Usuario) {
-                // hacemos casting y comparamos datos
-                if (((Usuario) listaPersonas.get(i)).getTelefono().equalsIgnoreCase(telefonoBuscar)
-                        && ((Usuario) listaPersonas.get(i)).getCorreoElectronico().equals(mailBuscar)) {
-
-                    System.out.println(" Usuario confirmado");
-                    posicion = i;
-                    return posicion;
-                }
-            }
-        }
-        System.out.println("Usuario no confirmado");
-        return posicion;
-    }// fin metodo confirmarUsuario
     
     public static void mostrarTodosLibros(ArrayList <Libro> listaLibros){
         for (int i = 0; i < listaLibros.size(); i++) {
