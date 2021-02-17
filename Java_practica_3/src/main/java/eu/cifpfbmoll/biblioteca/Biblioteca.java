@@ -41,7 +41,7 @@ public class Biblioteca {
         this.listaLibros = biblioteca.listaLibros;
         this.listaPersonas = biblioteca.listaPersonas;
     }
-    
+
     //METODOS GETTERS/SETTERS
     public String getNombreBiblioteca() {
         return nombreBiblioteca;

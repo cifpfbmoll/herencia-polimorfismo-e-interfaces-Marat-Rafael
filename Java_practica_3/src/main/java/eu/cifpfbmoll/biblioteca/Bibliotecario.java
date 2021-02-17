@@ -36,6 +36,7 @@ public class Bibliotecario extends Persona {
      * @param edad
      */
     public Bibliotecario(String puestoTrabajo, String NIF, String contrasenia, String nombre, String apellido1, String apellido2, int edad) {
+        // super acedemos a todos atributos del persona
         super(nombre, apellido1, apellido2, edad);
         this.puestoTrabajo = puestoTrabajo;
         this.NIF = NIF;
@@ -49,6 +50,7 @@ public class Bibliotecario extends Persona {
      * lo copia
      */
     public Bibliotecario(Bibliotecario bibliotecario) {
+        // con super acedemos a todo atributos de la persona
         super(bibliotecario.nombre, bibliotecario.apellido1, bibliotecario.apellido2, bibliotecario.edad);
         this.puestoTrabajo = bibliotecario.puestoTrabajo;
         this.NIF = bibliotecario.NIF;
@@ -65,6 +67,8 @@ public class Bibliotecario extends Persona {
      * @param persona le pasamo como parametro una persona ya existente
      */
     public Bibliotecario(String puestoTrabajo, String NIF, String contrasenia, Persona persona) {
+        // super para aceder a los atributos de la persona
+        super(persona.nombre, persona.apellido1, persona.apellido2,persona.edad);
         this.puestoTrabajo = puestoTrabajo;
         this.NIF = NIF;
         this.contrasenia = contrasenia;
@@ -127,13 +131,14 @@ public class Bibliotecario extends Persona {
 
         // creamos instancia del Bibliotecario
         Bibliotecario nuevoBibliotecario = new Bibliotecario(nuevoPuestoTrabajo, nuevoNIF, nuevaContrasenia, nuevaPersona);
-
+        // devuelvo una instancia creada del bibliotecario
         return nuevoBibliotecario;
     }//fin metodo solicitarDatosPersona
 
     /**
      * metodo para ver si bibliotecario existe en la lista
      *
+     * @param listaPersonas
      * @return
      */
     public boolean accesoBibliotecarioBoolean(ArrayList<Persona> listaPersonas) {
@@ -141,16 +146,16 @@ public class Bibliotecario extends Persona {
         String nifBuscado = sc.nextLine();
 
         System.out.println("Contraseña: ");
-        String contrasenia = sc.nextLine();
+        String contraseniaBuscada = sc.nextLine();
 
         //recorremos arraylist de personas
         for (int i = 0; i < listaPersonas.size(); i++) {
             // si un elemento es Bibliotecario
             if (listaPersonas.get(i) instanceof Bibliotecario) {
                 // casting para ser Bibliotecario
-                if (((Bibliotecario) listaPersonas.get(i)).getNIF().equalsIgnoreCase(nifBuscado)
+                if (((Bibliotecario) listaPersonas.get(i)).getNIF().equals(nifBuscado)
                         // comparamos con nif del bibliotecario de la lista
-                        && ((Bibliotecario) listaPersonas.get(i)).getContrasenia().equals(contrasenia)) {
+                        && ((Bibliotecario) listaPersonas.get(i)).getContrasenia().equals(contraseniaBuscada)) {
                     // comparamos con contraseña del Bibliotecario
                     return true;
                 }

@@ -48,7 +48,8 @@ public class Usuario extends Persona {
                     String nombre, 
                     String apellido1, 
                     String apellido2, 
-                    byte edad) {
+                    int edad) {
+        // con suer accedemos a los campos de los atributos de la persona
         super(nombre, apellido1, apellido2, edad);
         this.telefono = telefono;
         this.direccion = direccion;
@@ -85,6 +86,8 @@ public class Usuario extends Persona {
                     String codigoPostal, 
                     String correoElectronico, 
                     ArrayList<Reserva> listaReservas) {
+        // con super copiamos todos atributos de la persona
+        super(persona.nombre,persona.apellido1,persona.apellido2, persona.edad);
         this.telefono = telefono;
         this.direccion = direccion;
         this.codigoPostal = codigoPostal;
@@ -160,7 +163,18 @@ public class Usuario extends Persona {
     }//fin metodo solicitarDatosPersona
 
 
-
+    // metodo para controlar que no haya mas de 5 libros reservados
+    /**
+     * 
+     * @return false si hay mas de 5 libros en la lista de reservas
+     */
+    public boolean librosControl(){
+        // acedemos a la lista de reservas del usuario, si su tamaño es menos que 5 devuelve true
+        if(this.getListaReservas().size()<5){
+            return true;
+        }
+        return false;
+    }// finmetodo librosControl
     
     
 

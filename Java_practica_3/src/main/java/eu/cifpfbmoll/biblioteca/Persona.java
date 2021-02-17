@@ -91,9 +91,11 @@ public abstract class Persona {
         System.out.println("Segundo apellido: ");
         String nuevoApellido2 = sc.nextLine();
         System.out.println("Edad: ");
-        int nuevoEdad = sc.nextByte();
-
+        int nuevoEdad = sc.nextInt();
+        sc.nextLine();
+        // creamos persona 
         Persona nuevaPersona = new Persona(nuevoNombre, nuevoApellido1, nuevoApellido2, nuevoEdad) {};
+        // devolvemos persona
         return nuevaPersona;
     }//fin metodo solicitarDatosPersona
 }
