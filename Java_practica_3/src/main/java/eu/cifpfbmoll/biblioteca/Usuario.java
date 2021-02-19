@@ -181,5 +181,10 @@ public class Usuario extends Persona {
         return false;
     }// finmetodo librosControl
  
+    public void mostrarReservasUsuario(Usuario usuario){
+        for (int i = 0; i < usuario.getListaReservas().size(); i++) {
+            System.out.println(usuario.getListaReservas().get(i).toString());           
+        }
+    }
 
 }// fin classe Usuario

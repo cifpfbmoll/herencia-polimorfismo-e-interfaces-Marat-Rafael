@@ -6,7 +6,12 @@ toString (NO imprimirá los datos de la superclase).
  */
 package eu.cifpfbmoll.biblioteca;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -60,7 +65,6 @@ public class Bibliotecario extends Persona {
         this.contrasenia = bibliotecario.contrasenia;
     }
 
-
     //GETTER/SETTER
     public String getPuestoTrabajo() {
         return puestoTrabajo;
@@ -97,32 +101,6 @@ public class Bibliotecario extends Persona {
     }
 
     // resto de metodos
-    /**
-     * un metodo que pide datos y devuelve un Bibliotecario parte del metodo
-     * usamos del padre que devuelve una persona a partir de la cual creamos
-     * bibliotecario
-     *
-     * @return bibliotecario
-     */
-    /* obsoleto , para borrar
-    @Override
-    public Bibliotecario solicitarDatosPersona() {
-        // creamos instancia de persona nuevaPersona la que recibe caracteristicas del metodo padre
-        Persona nuevaPersona = super.solicitarDatosPersona();
-
-        System.out.println("Puesto de trabajo: ");
-        String nuevoPuestoTrabajo = sc.nextLine();
-        System.out.println("NIF: ");
-        String nuevoNIF = sc.nextLine();
-        System.out.println("Contraseña: ");
-        String nuevaContrasenia = sc.nextLine();
-
-        // creamos instancia del Bibliotecario
-        Bibliotecario nuevoBibliotecario = new Bibliotecario(nuevoPuestoTrabajo, nuevoNIF, nuevaContrasenia, nuevaPersona);
-        // devuelvo una instancia creada del bibliotecario
-        return nuevoBibliotecario;
-    }//fin metodo solicitarDatosPersona
-     */
     /**
      * metodo para rellenar datos del Bibliotecario
      */
@@ -250,8 +228,8 @@ public class Bibliotecario extends Persona {
      */
     public void reservarLibro(ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
         int numeroCopias;
-        int posicion = -1;
-        // aqui guardamos la posicion de la persona que va hacer reserva
+        int indiceLibro = -1;
+        // aqui guardamos la indiceLibro de la persona que va hacer reserva
         int indiceUsuario = confirmarUsuario(listaPersonas);
         if (indiceUsuario != -1) {
             // si usuario existecreamos objeto Usuario y rellenamos con datos del ArrayList
@@ -265,33 +243,124 @@ public class Bibliotecario extends Persona {
                 System.out.println("Tiene menos de 5 reservas puede solicitar un libro");
                 System.out.println("ISBN: ");
                 String isbnBuscado = sc.nextLine();
-                
-                // llamamos metodo que nos devuelve posicion del libro
-                posicion = Libro.confirmarLibro(isbnBuscado, listaLibros);
-                
-                if(posicion == -1){
-                    System.out.println("No se encuentra libro con ISBN "+isbnBuscado);
-                    
-                }else{
+
+                // llamamos metodo que nos devuelve indiceLibro del libro
+                indiceLibro = Libro.confirmarLibro(isbnBuscado, listaLibros);
+
+                if (indiceLibro == -1) {
+                    System.out.println("No se encuentra libro con ISBN " + isbnBuscado);
+
+                } else {
                     System.out.println("Encontramos un libro con ISBN indicado ");
-                    System.out.println(listaLibros.get(posicion).toString()); 
-                    
-                    Libro libroReservado = listaLibros.get(posicion);
-                    
-                    // accedemos a numero de copias
-                    numeroCopias = listaLibros.get(posicion).getNumCopiasDisponibles();
-                    // restamos uno
-                    numeroCopias = numeroCopias-1;
-                    // modificamos en la lista de libros
-                    listaLibros.get(posicion).setNumCopiasDisponibles(numeroCopias);
-                    
-                }              
-                
+                    System.out.println(listaLibros.get(indiceLibro).toString());
+
+                    if (listaLibros.get(indiceLibro).getNumCopiasDisponibles() < 1) {
+                        System.out.println("Lo siento no quedan copias disponibles");
+                    } else {
+
+                        //--------------Creamos fecha-----------
+                        // nuevo objeto que da formato a la fecha
+                        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        // nuevo objeto fecha local
+                        LocalDate fechaReserva = LocalDate.now();
+                        //a la fecha local aplicalos formato 
+                        fechaReserva.format(formatoFecha);
+                        //------------Creamos hora--------------
+                        // creamos objeto de la horaLocal
+                        LocalTime horaReserva = LocalTime.now();
+                        // creamos formato
+                        DateTimeFormatter formatHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+                        // aplicamos formato al objeto de la horaReserva
+                        horaReserva.format(formatHora);
+                        //---------------------------------------
+
+                        // copiamos libro en un nuevo objeto
+                        Libro libroReservado = listaLibros.get(indiceLibro);
+                        // creamos nuevo objeto reserva, dentro tiene un libro reservado, fecha y hora
+
+                        Reserva nuevaReserva = new Reserva(libroReservado, fechaReserva.format(formatoFecha), horaReserva.format(formatHora));
+
+                        // acedemos a la lista de reservas de Usuario y le añadimos esta nueva reserva
+                        usuario.getListaReservas().add(nuevaReserva);
+
+                        // accedemos a numero de copias
+                        numeroCopias = listaLibros.get(indiceLibro).getNumCopiasDisponibles();
+                        // restamos uno
+                        numeroCopias = numeroCopias - 1;
+                        // modificamos en la lista de libros
+                        listaLibros.get(indiceLibro).setNumCopiasDisponibles(numeroCopias);
+
+                        System.out.println("Reserva creada");
+                        System.out.println(nuevaReserva.toString());
+                    }
+                }
+            } else {
+                System.out.println("Tiene 5 libros reservados, no puede hacer mas reservas");
+                //System.out.println(usuario.getListaReservas().toString());
+                for (int i = 0; i < usuario.getListaReservas().size(); i++) {
+                    System.out.println(usuario.getListaReservas().get(i).toString());
+
+                }
             }
-
         }
+    }// fin metodo reservarLibro
 
-    }
+    /**
+     * metodo para devolver libro a la biblioteca
+     *
+     * @param listaLibros
+     * @param listaPersonas
+     */
+    public void devolverLibro(ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
+
+        int indiceUsuario = confirmarUsuario(listaPersonas);
+
+        if (indiceUsuario != -1) {
+
+            // mostramos usuario usando casting
+            Usuario usuarioConfirmado = (Usuario) listaPersonas.get(indiceUsuario);
+            System.out.println(usuarioConfirmado.toString());
+
+            // si usuario tiene lista de reservas mas de 0 lostramos reservas
+            if (usuarioConfirmado.getListaReservas().size() > 0) {
+
+                System.out.println("Reservas del usuario");
+                System.out.println("************************");
+                // mostramos todas reservas actuales del usuario
+                usuarioConfirmado.mostrarReservasUsuario(usuarioConfirmado);
+                
+                System.out.println("************************");
+                System.out.println("ISBN del libro que devuelve usuario");
+                String isbnDevolver = sc.nextLine();
+
+                // recoreemos lista de reservas para comprobar que ISBN indicado coincide con ISBN de reservado
+                for (int i = 0; i < usuarioConfirmado.getListaReservas().size(); i++) {
+                    // si coincide
+                    if (usuarioConfirmado.getListaReservas().get(i).getLibro().getISBN().equals(isbnDevolver)) {
+                        // borramos elemento de la lista
+                        usuarioConfirmado.getListaReservas().remove(i);
+                        System.out.println("Reserva borrada");
+                        usuarioConfirmado.mostrarReservasUsuario(usuarioConfirmado);
+                    }else{
+                        System.out.println("No hay libro con ISBN "+ isbnDevolver);
+                    }
+                }
+                // ahora hay que aumentar numero de copias de libros disponibles
+                // recorremos lista de libros
+                for (int i = 0; i < listaLibros.size(); i++) {
+                    // cuando encontramos isbn que coinciden
+                    if (listaLibros.get(i).getISBN().equals(isbnDevolver)) {
+                        // acedemos a numero de copias
+                        int copiasActuales = listaLibros.get(i).getNumCopiasDisponibles();
+                        // modificamos +1
+                        copiasActuales++;
+                        // y devolvemos a la lista
+                        listaLibros.get(i).setNumCopiasDisponibles(copiasActuales);
+                    }
+                }
+            }// fin if usuario confirmado
+        }
+    }// fin metodo devolverLibro
 
     /**
      * metodo para confirmar que usuario esta ne la lista de personas
@@ -311,7 +380,7 @@ public class Bibliotecario extends Persona {
                 if (((Usuario) listaPersonas.get(i)).getTelefono().equalsIgnoreCase(telefonoBuscar)
                         && ((Usuario) listaPersonas.get(i)).getCorreoElectronico().equals(mailBuscar)) {
 
-                    System.out.println(" Usuario confirmado");
+                    System.out.println("Usuario confirmado");
                     posicion = i;
                     return posicion;
                 }

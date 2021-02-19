@@ -39,20 +39,20 @@ public class AppBiblioteca {
         Libro l2 = new Libro("002", "Divina comedia", "Dante", "Algani Editorial", 55, 0);
         Libro l3 = new Libro("003", "Divina comedia", "Dante", "Editorial Denes", 55, 55);
         Libro l4 = new Libro("004", "Don Quijote de la Mancha 1", "Cervantes", "Andavira Editora", 55, 35);
-        Libro l5 = new Libro("111", "Don Quijote de la Mancha 2", "Cervantes", "Andavira Editora", 55, 33);
-        Libro l7 = new Libro("112", "El idiota", "Dostoievski", "La Pajarita Roja", 15, 0);
-        Libro l8 = new Libro("113", "El idiota", "Dostoievski", "Calambur Editorial", 15, 5);
-        Libro l9 = new Libro("975689215", "Almas muertas", "Dostoievski", "La Pajarita Roja", 11, 1);
-        Libro l10 = new Libro("587348122", "Lolita", "Nabokov", "La Pajarita Roja", 100, 0);
-        Libro l20 = new Libro("683745554", "Romancero gitano", "Lorca", "Kraicon", 1000, 568);
-        Libro l21 = new Libro("683745654", "Romancero gitano", "Lorca", "Algani Editorial", 1000, 955);
-        Libro l22 = new Libro("898945677", "Romancero gitano", "Lorca", "Calambur Editorial", 95, 95);
-        Libro l23 = new Libro("233364926", "Don Quijote de la Mancha 1", "Cervantes", "Calambur Editorial", 20, 0);
-        Libro l24 = new Libro("235364899", "Don Quijote de la Mancha 2", "Cervantes", "Calambur Editorial", 20, 0);
-        Libro l30 = new Libro("111122222", "Guerra y paz 1", "Tolstoi", "La Pajarita Roja", 20, 20);
-        Libro l31 = new Libro("111133333", "Guerra y paz 2", "Tolstoi", "La Pajarita Roja", 20, 20);
-        Libro l32 = new Libro("111144444", "Guerra y paz 3", "Tolstoi", "La Pajarita Roja", 20, 20);
-        Libro l33 = new Libro("111155555", "Guerra y paz 4", "Tolstoi", "La Pajarita Roja", 20, 20);
+        Libro l5 = new Libro("005", "Don Quijote de la Mancha 2", "Cervantes", "Andavira Editora", 55, 33);
+        Libro l7 = new Libro("006", "El idiota", "Dostoievski", "La Pajarita Roja", 15, 0);
+        Libro l8 = new Libro("007", "El idiota", "Dostoievski", "Calambur Editorial", 15, 5);
+        Libro l9 = new Libro("008", "Almas muertas", "Dostoievski", "La Pajarita Roja", 11, 1);
+        Libro l10 = new Libro("009", "Lolita", "Nabokov", "La Pajarita Roja", 100, 0);
+        Libro l20 = new Libro("010", "Romancero gitano", "Lorca", "Kraicon", 1000, 568);
+        Libro l21 = new Libro("011", "Romancero gitano", "Lorca", "Algani Editorial", 1000, 955);
+        Libro l22 = new Libro("012", "Romancero gitano", "Lorca", "Calambur Editorial", 95, 95);
+        Libro l23 = new Libro("013", "Don Quijote de la Mancha 1", "Cervantes", "Calambur Editorial", 20, 0);
+        Libro l24 = new Libro("014", "Don Quijote de la Mancha 2", "Cervantes", "Calambur Editorial", 20, 0);
+        Libro l30 = new Libro("015", "Guerra y paz 1", "Tolstoi", "La Pajarita Roja", 20, 20);
+        Libro l31 = new Libro("016", "Guerra y paz 2", "Tolstoi", "La Pajarita Roja", 20, 20);
+        Libro l32 = new Libro("017", "Guerra y paz 3", "Tolstoi", "La Pajarita Roja", 20, 20);
+        Libro l33 = new Libro("018", "Guerra y paz 4", "Tolstoi", "La Pajarita Roja", 20, 20);
 
         miBiblioteca.getListaLibros().add(l1);
         miBiblioteca.getListaLibros().add(l2);
@@ -80,7 +80,7 @@ public class AppBiblioteca {
         Usuario u3 = new Usuario(new ArrayList<Reserva>(), "33333", "plaza Paris 45", "07232", "david@gmail.com", "David", "Fernandez", "Goya", 43);
         Usuario u4 = new Usuario(new ArrayList<Reserva>(), "44444", "calle Matamorros 33", "07698", "fernando@gmail.com", "Fernando", "Rey", "Velazquez", 24);
         Usuario u5 = new Usuario(new ArrayList<Reserva>(), "55555", "plaza Mayor 3", "07114", "rafael@gmail.com", "Rafael", "Guion", "Muñoz", 36);
-        Usuario u6 = new Usuario(new ArrayList<Reserva>(), "1", "1", "1", "1", "Rafael", "Guion", "Muñoz", 36);
+        Usuario u6 = new Usuario(new ArrayList<Reserva>(), "1", "1", "1", "1", "R", "G", "M", 36);
 
         //añadimos a la lista de personas
         miBiblioteca.getListaPersonas().add(u1);
@@ -146,13 +146,11 @@ public class AppBiblioteca {
                                     break;
                                 case 4:
                                     // Reservar Libro
-                                    Bibliotecario.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
-                                    
+                                    Bibliotecario.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());                                    
                                     break;
-
                                 case 5:
                                     // devolver libro
-                                    
+                                    Bibliotecario.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());                                   
                                     break;
                                 case 6:
                                     // mostrar todos libros
@@ -164,11 +162,12 @@ public class AppBiblioteca {
                                     Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
                                     break;
                                 case 8:
-                                    // añadir libro a la biblioteca
+                                     // añadir libro a la biblioteca
+                                    Libro.crearLibroParaLista(miBiblioteca.getListaLibros());                                  
                                     break;
-
                                 case 9:
                                     // eliminar libro de la biblioteca
+                                    Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());                                    
                                     break;
                                 case 0:
                                     // salir
@@ -179,12 +178,16 @@ public class AppBiblioteca {
                         } while (!salirBibliotecario);
                     } else {
                         // si no confirmado salimos
-                        System.out.println("Usuario no confirmado");
+                        System.out.println("Bibliotecario no confirmado");
                         salirBibliotecario = true;
                     }
                     break;
                 // terminamos menu del Bibliotecario
                 case 2:// menu del Usuario
+                    
+                    do {                        
+                        
+                    } while (!salirUsuario);
 
                     break;
                 case 0:

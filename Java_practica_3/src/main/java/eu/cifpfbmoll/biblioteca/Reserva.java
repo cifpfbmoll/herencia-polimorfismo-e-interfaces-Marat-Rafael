@@ -16,7 +16,7 @@ public class Reserva {
     //ATRIBUTOS
     private static int IDreserva; // estatica , comun para todos
     private int id;// individual
-    private ArrayList<Libro> libro;
+    private Libro libro;
     private String fechaReserva;
     private String horaReserva;
 
@@ -26,7 +26,7 @@ public class Reserva {
         id = IDreserva; // y su valor se guarda en variable id
     }
 
-    public Reserva(ArrayList<Libro> libro, String fechaReserva, String horaReserva) {
+    public Reserva(Libro libro, String fechaReserva, String horaReserva) {
         IDreserva++;
         id = IDreserva;
         this.libro = libro;
@@ -52,11 +52,11 @@ public class Reserva {
     }
 
     
-    public ArrayList<Libro> getLibro() {
+    public Libro getLibro() {
         return libro;
     }
 
-    public void setLibro(ArrayList<Libro> libro) {
+    public void setLibro(Libro libro) {
         this.libro = libro;
     }
 
