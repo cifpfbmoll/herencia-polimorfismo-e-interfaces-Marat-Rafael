@@ -123,7 +123,8 @@ public class AppBiblioteca {
                             System.out.println("6 - Mostrar todos libros");
                             System.out.println("7 - Mostrar solo libros disponibles");
                             System.out.println("8 - Añadir libros a la lista");
-                            System.out.println("9 - Eliminar libro de lalista");
+                            System.out.println("9 - Eliminar libro de lalista");                           
+                            System.out.println("11 - Mostrar todos usuarios");
                             System.out.println("0 - Salir");
                             byte opcionBibliotecario = sc.nextByte();
                             sc.nextLine();
@@ -169,6 +170,9 @@ public class AppBiblioteca {
                                     // eliminar libro de la biblioteca
                                     Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());
                                     break;
+                                case 11:
+                                    Usuario.mostrarTodosUsuarios(miBiblioteca.getListaPersonas());
+                                    break;
                                 case 0:
                                     // salir
                                     salirBibliotecario = true;
@@ -187,7 +191,7 @@ public class AppBiblioteca {
                     // control de acceso del usuario creamos nuevo objeto Usuario
                     Usuario usuario = new Usuario();
                     //variable para metodo que devuelve posicion del usuario si existe, y devuelve -1 si no existe
-                    int posicionUsuario = usuario.confirmarUsuario(miBiblioteca.getListaPersonas());
+                    int posicionUsuario = Usuario.confirmarUsuario(miBiblioteca.getListaPersonas());
                     if (posicionUsuario == -1) {
                         System.out.println("Desea registrarse en la Biblioteca? si/no");
                         String registrarNuevoUsuario = sc.nextLine();
@@ -195,9 +199,9 @@ public class AppBiblioteca {
                             Usuario.crearNuevoUsuarioParaLista(miBiblioteca.getListaPersonas());
                         }
                     } else {
-
+                        usuario=(Usuario) miBiblioteca.getListaPersonas().get(posicionUsuario);
                         do {
-                            System.out.println("*********USUARIO*********");
+                            System.out.println("**********USUARIO*********");
                             System.out.println("***********MENU**********");
                             System.out.println("1 - Ver todos libros de la biblioteca");
                             System.out.println("2 - Ver libros disponibles de la biblioteca");
@@ -229,6 +233,7 @@ public class AppBiblioteca {
                 case 0:
                     salirMenu = true;
             }// fin switch MENU principal
+            
         } while (!salirMenu);
-    }
+    }//fin main
 }

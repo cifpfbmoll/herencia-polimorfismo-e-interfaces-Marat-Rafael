@@ -217,4 +217,17 @@ public class Usuario extends Persona {
             }
         }
     }// fin metodo mostrarReservas
+    
+    /**
+     * metodo para mostrar todos usuarios registrados
+     * @param listaPersonas 
+     */
+    public static void mostrarTodosUsuarios(ArrayList<Persona>listaPersonas){
+        for (int i = 0; i < listaPersonas.size(); i++) {
+            if(listaPersonas.get(i) instanceof Usuario){
+                System.out.println(listaPersonas.get(i).toString());
+            }           
+        }
+    }//fin metodo mostrarTodosUsuarios
+    
 }// fin classe Usuario
