@@ -6,12 +6,12 @@ toString (NO imprimirá los datos de la superclase).
  */
 package eu.cifpfbmoll.biblioteca;
 
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -121,34 +121,30 @@ public class Bibliotecario extends Persona {
         this.setContrasenia(nuevaContrasenia);
     }
 
-    /**
-     * metodo para ver si bibliotecario existe en la lista
-     *
-     * @param listaPersonas
-     * @return
-     */
-    public boolean accesoBibliotecarioBoolean(ArrayList<Persona> listaPersonas) {
+    
+    public static int accesoBibliotecario(ArrayList<Persona> listaPersonas) {
+        // posicion predeterminada -1, si encontramos en la lista de Personas cambiamos posicion
+        int posicionBibliotecario = -1;
         System.out.println("NIF del Bibliotecario: ");
         String nifBuscado = sc.nextLine();
 
         System.out.println("Contraseña: ");
         String contraseniaBuscada = sc.nextLine();
 
-        //recorremos arraylist de personas
         for (int i = 0; i < listaPersonas.size(); i++) {
-            // si un elemento es Bibliotecario
             if (listaPersonas.get(i) instanceof Bibliotecario) {
-                // casting para ser Bibliotecario
+                // casting para pasar Persona al Bibliotecario
+                // comparamos NIF 
                 if (((Bibliotecario) listaPersonas.get(i)).getNIF().equals(nifBuscado)
-                        // comparamos con nif del bibliotecario de la lista
-                        && ((Bibliotecario) listaPersonas.get(i)).getContrasenia().equals(contraseniaBuscada)) {
-                    // comparamos con contraseña del Bibliotecario
-                    return true;
+                        // y comparamos contraseña
+                        || ((Bibliotecario) listaPersonas.get(i)).getContrasenia().equals(contraseniaBuscada)) {
+                    // si coinciden
+                    return i;
                 }
             }
         }
-        return false;
-    } // fin metodo accesoBibliotecarioBoolean
+        return posicionBibliotecario;
+    }// fin metodo acesoBibliotecario
 
     public void mostrarTodosBibliotecarios(ArrayList<Persona> listaPersonas) {
 
@@ -162,7 +158,7 @@ public class Bibliotecario extends Persona {
     public void borrarBibliotecario(ArrayList<Persona> listaPersonas) {
         System.out.println("Indica NIF del Bibliotecario a borrar: ");
         String nifBorrar = sc.nextLine();
-        if (!buscarBibiotecarioNifBoolean(nifBorrar, listaPersonas)) {
+        if (buscarBibiotecarioNifPosicion(nifBorrar, listaPersonas) == -1) {
             System.out.println("No se encuentraeste Bibliotecario en la lista");
         } else {
             for (int i = 0; i < listaPersonas.size(); i++) {
@@ -179,23 +175,27 @@ public class Bibliotecario extends Persona {
     }// fin metodo borrarBibliotecario
 
     /**
+     * metodo para comprobar si bibliotecario esta en la lista, devuelve su
+     * posicion o -1 si no se encuentra
      *
      * @param nifBuscado
      * @param listaPersonas
      * @return
      */
-    public boolean buscarBibiotecarioNifBoolean(String nifBuscado, ArrayList<Persona> listaPersonas) {
+    public int buscarBibiotecarioNifPosicion(String nifBuscado, ArrayList<Persona> listaPersonas) {
+        // valor predeterminado sera -1, si encontramos al bibliotecario devolvemos su posicion en la lista de personas
+        int posicion = -1;
         //recoremos array
         for (int i = 0; i < listaPersonas.size(); i++) {
             //si elemento instanceof de Bibliotecario
             if (listaPersonas.get(i) instanceof Bibliotecario) {
                 // comparamos con nif si es igual devolver true
                 if (((Bibliotecario) listaPersonas.get(i)).getNIF().equalsIgnoreCase(nifBuscado)) {
-                    return true;
+                    posicion = i;
                 }
             }
         }
-        return false;
+        return posicion;
     }// fin metodo buscar BibliotecarioNifBoolean
 
     /**
@@ -328,7 +328,7 @@ public class Bibliotecario extends Persona {
                 System.out.println("************************");
                 // mostramos todas reservas actuales del usuario
                 usuarioConfirmado.mostrarReservasUsuario(usuarioConfirmado);
-                
+
                 System.out.println("************************");
                 System.out.println("ISBN del libro que devuelve usuario");
                 String isbnDevolver = sc.nextLine();
@@ -341,8 +341,8 @@ public class Bibliotecario extends Persona {
                         usuarioConfirmado.getListaReservas().remove(i);
                         System.out.println("Reserva borrada");
                         usuarioConfirmado.mostrarReservasUsuario(usuarioConfirmado);
-                    }else{
-                        System.out.println("No hay libro con ISBN "+ isbnDevolver);
+                    } else {
+                        System.out.println("No hay libro con ISBN " + isbnDevolver);
                     }
                 }
                 // ahora hay que aumentar numero de copias de libros disponibles
@@ -361,5 +361,24 @@ public class Bibliotecario extends Persona {
             }// fin if usuario confirmado
         }
     }// fin metodo devolverLibro
+
+    /**
+     * metodo abstracto para cambiar contraseña
+     */
+    @Override
+    public void cambiarContrasenia() {
+        boolean contraseniasCoinciden = false;
+        do {
+            System.out.println("Escribe nueva contraseña: ");
+            String nuevaContrasenia1 = sc.nextLine();
+            System.out.println("Vuelve a escribir nueva contraseña: ");
+            String nuevaContrasenia2 = sc.nextLine();
+            if (nuevaContrasenia1.equals(nuevaContrasenia2)) {
+                contraseniasCoinciden = true;
+                this.setContrasenia(nuevaContrasenia1);
+                System.out.println("Nueva contraseña esta establecida");
+            }
+        } while (!contraseniasCoinciden);
+    }// fin metodo cambiarContrasenia
 
 }//fin class Bibliotecario

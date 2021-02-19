@@ -102,5 +102,8 @@ public abstract class Persona {
         this.setEdad(nuevoEdad);
     }//fin metodo solicitarDatosPersona
     
+    //declaramos metodo abstracto para cambiar contraseña
+    public abstract void cambiarContrasenia();
+    
     
 }

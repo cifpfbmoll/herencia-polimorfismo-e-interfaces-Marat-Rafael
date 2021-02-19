@@ -229,5 +229,13 @@ public class Usuario extends Persona {
             }           
         }
     }//fin metodo mostrarTodosUsuarios
+
+    /**
+     * metodo abstracto de la clase persona para cambiar contraseña
+     */
+    @Override
+    public void cambiarContrasenia() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }// fin classe Usuario

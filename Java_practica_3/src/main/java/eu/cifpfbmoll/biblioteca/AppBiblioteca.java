@@ -104,13 +104,14 @@ public class AppBiblioteca {
             opcion = sc.nextByte();
             sc.nextLine();
             switch (opcion) {
-                case 1:// menu del Bibliotecario
-                    Bibliotecario Bibliotecario = new Bibliotecario();
-
+                case 1:// menu del bibliotecarioActual                   
+                    int posicionDelBibliotecarioActual = Bibliotecario.accesoBibliotecario(miBiblioteca.getListaPersonas());
                     // llamamos metodo para confirmamr que este usuario existe
-                    if (Bibliotecario.accesoBibliotecarioBoolean(miBiblioteca.getListaPersonas())) {
-                        // si confirmamos Bibliotecario mostramos menu
-
+                    if (posicionDelBibliotecarioActual != -1) {
+                        // si confirmamos bibliotecarioActual mostramos menu
+                        // creamos una instancia del bibliotecario que actualmente esta en menu 
+                        Bibliotecario bibliotecarioActual = (Bibliotecario) miBiblioteca.getListaPersonas().get(posicionDelBibliotecarioActual);
+                      
                         do {
 
                             System.out.println("*********Bibliotecario******");
@@ -125,6 +126,7 @@ public class AppBiblioteca {
                             System.out.println("8 - Añadir libros a la lista");
                             System.out.println("9 - Eliminar libro de lalista");                           
                             System.out.println("11 - Mostrar todos usuarios");
+                            System.out.println("12 - Cambiar contraseña");
                             System.out.println("0 - Salir");
                             byte opcionBibliotecario = sc.nextByte();
                             sc.nextLine();
@@ -139,19 +141,19 @@ public class AppBiblioteca {
                                     break;
                                 case 2:
                                     // mostramos todos bilotecarios de la lista
-                                    Bibliotecario.mostrarTodosBibliotecarios(miBiblioteca.getListaPersonas());
+                                    bibliotecarioActual.mostrarTodosBibliotecarios(miBiblioteca.getListaPersonas());
                                     break;
                                 case 3:
                                     //borramos un bibliotecario existente de la lista
-                                    Bibliotecario.borrarBibliotecario(miBiblioteca.getListaPersonas());
+                                    bibliotecarioActual.borrarBibliotecario(miBiblioteca.getListaPersonas());
                                     break;
                                 case 4:
                                     // Reservar Libro
-                                    Bibliotecario.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
+                                    bibliotecarioActual.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
                                     break;
                                 case 5:
                                     // devolver libro
-                                    Bibliotecario.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
+                                    bibliotecarioActual.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
                                     break;
                                 case 6:
                                     // mostrar todos libros
@@ -173,6 +175,9 @@ public class AppBiblioteca {
                                 case 11:
                                     Usuario.mostrarTodosUsuarios(miBiblioteca.getListaPersonas());
                                     break;
+                                case 12:
+                                    bibliotecarioActual.cambiarContrasenia();
+                                    break;
                                 case 0:
                                     // salir
                                     salirBibliotecario = true;
@@ -186,7 +191,8 @@ public class AppBiblioteca {
                         salirBibliotecario = true;
                     }
                     break;
-                // terminamos menu del Bibliotecario
+
+                // terminamos menu del bibliotecarioActual
                 case 2:// menu del Usuario
                     // control de acceso del usuario creamos nuevo objeto Usuario
                     Usuario usuario = new Usuario();
