@@ -146,11 +146,11 @@ public class AppBiblioteca {
                                     break;
                                 case 4:
                                     // Reservar Libro
-                                    Bibliotecario.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());                                    
+                                    Bibliotecario.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
                                     break;
                                 case 5:
                                     // devolver libro
-                                    Bibliotecario.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());                                   
+                                    Bibliotecario.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
                                     break;
                                 case 6:
                                     // mostrar todos libros
@@ -162,12 +162,12 @@ public class AppBiblioteca {
                                     Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
                                     break;
                                 case 8:
-                                     // añadir libro a la biblioteca
-                                    Libro.crearLibroParaLista(miBiblioteca.getListaLibros());                                  
+                                    // añadir libro a la biblioteca
+                                    Libro.crearLibroParaLista(miBiblioteca.getListaLibros());
                                     break;
                                 case 9:
                                     // eliminar libro de la biblioteca
-                                    Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());                                    
+                                    Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());
                                     break;
                                 case 0:
                                     // salir
@@ -184,10 +184,46 @@ public class AppBiblioteca {
                     break;
                 // terminamos menu del Bibliotecario
                 case 2:// menu del Usuario
-                    
-                    do {                        
-                        
-                    } while (!salirUsuario);
+                    // control de acceso del usuario creamos nuevo objeto Usuario
+                    Usuario usuario = new Usuario();
+                    //variable para metodo que devuelve posicion del usuario si existe, y devuelve -1 si no existe
+                    int posicionUsuario = usuario.confirmarUsuario(miBiblioteca.getListaPersonas());
+                    if (posicionUsuario == -1) {
+                        System.out.println("Desea registrarse en la Biblioteca? si/no");
+                        String registrarNuevoUsuario = sc.nextLine();
+                        if (registrarNuevoUsuario.equalsIgnoreCase("si")) {
+                            Usuario.crearNuevoUsuarioParaLista(miBiblioteca.getListaPersonas());
+                        }
+                    } else {
+
+                        do {
+                            System.out.println("*********USUARIO*********");
+                            System.out.println("***********MENU**********");
+                            System.out.println("1 - Ver todos libros de la biblioteca");
+                            System.out.println("2 - Ver libros disponibles de la biblioteca");
+                            System.out.println("3 - Ver mis reservas");
+                            System.out.println("0 - Salir");
+                            byte opcionUsuario = sc.nextByte();
+                            sc.nextLine();
+                            switch (opcionUsuario) {
+                                case 1:// ver lista de libros
+                                    Libro.mostrarTodosLibros(miBiblioteca.getListaLibros());                                    
+                                    break;
+                                case 2:// ver lista de libros disponibles
+                                    Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
+                                    break;
+                                case 3:// ver mis reservas
+                                    usuario.mostrarReservas();
+                                    break;
+                                case 0://salir
+                                    salirUsuario = true;
+                                    break;
+
+                            }//fin switch Usuario
+
+                        } while (!salirUsuario);
+
+                    }
 
                     break;
                 case 0:

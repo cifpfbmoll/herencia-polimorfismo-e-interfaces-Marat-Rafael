@@ -230,7 +230,7 @@ public class Bibliotecario extends Persona {
         int numeroCopias;
         int indiceLibro = -1;
         // aqui guardamos la indiceLibro de la persona que va hacer reserva
-        int indiceUsuario = confirmarUsuario(listaPersonas);
+        int indiceUsuario = Usuario.confirmarUsuario(listaPersonas);
         if (indiceUsuario != -1) {
             // si usuario existecreamos objeto Usuario y rellenamos con datos del ArrayList
             Usuario usuario = new Usuario();
@@ -313,7 +313,7 @@ public class Bibliotecario extends Persona {
      */
     public void devolverLibro(ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
 
-        int indiceUsuario = confirmarUsuario(listaPersonas);
+        int indiceUsuario = Usuario.confirmarUsuario(listaPersonas);
 
         if (indiceUsuario != -1) {
 
@@ -361,33 +361,5 @@ public class Bibliotecario extends Persona {
             }// fin if usuario confirmado
         }
     }// fin metodo devolverLibro
-
-    /**
-     * metodo para confirmar que usuario esta ne la lista de personas
-     *
-     * @param listaPersonas
-     */
-    public static int confirmarUsuario(ArrayList<Persona> listaPersonas) {
-        int posicion = -1;
-        System.out.println("Indica telefono del usuario: ");
-        String telefonoBuscar = sc.nextLine();
-        System.out.println("Indica correo del usuario: ");
-        String mailBuscar = sc.nextLine();
-        for (int i = 0; i < listaPersonas.size(); i++) {
-            // recorremos array buscando Usuarios
-            if (listaPersonas.get(i) instanceof Usuario) {
-                // hacemos casting y comparamos datos
-                if (((Usuario) listaPersonas.get(i)).getTelefono().equalsIgnoreCase(telefonoBuscar)
-                        && ((Usuario) listaPersonas.get(i)).getCorreoElectronico().equals(mailBuscar)) {
-
-                    System.out.println("Usuario confirmado");
-                    posicion = i;
-                    return posicion;
-                }
-            }
-        }
-        System.out.println("Usuario no confirmado");
-        return posicion;
-    }// fin metodo confirmarUsuario
 
 }//fin class Bibliotecario

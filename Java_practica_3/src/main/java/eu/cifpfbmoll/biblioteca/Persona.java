@@ -77,28 +77,7 @@ public abstract class Persona {
     }
 
     //METODOS
-    /**
-     * un método llamado ​ solicitarDatosPersona de la clase Persona, que pide
-     * los datos y devuelve una Persona.
-     *
-     * @return persona
-     
-    public Persona solicitarDatosPersona() {
-        System.out.println("Nombre: ");
-        String nuevoNombre = sc.nextLine();
-        System.out.println("Primer apellido: ");
-        String nuevoApellido1 = sc.nextLine();
-        System.out.println("Segundo apellido: ");
-        String nuevoApellido2 = sc.nextLine();
-        System.out.println("Edad: ");
-        int nuevoEdad = sc.nextInt();
-        sc.nextLine();
-        // creamos persona 
-        Persona nuevaPersona = new Persona(nuevoNombre, nuevoApellido1, nuevoApellido2, nuevoEdad) {};
-        // devolvemos persona
-        return nuevaPersona;
-    }//fin metodo solicitarDatosPersona
-    */
+
     
         /**
      * un método llamado ​ solicitarDatosPersona de la clase Persona, 

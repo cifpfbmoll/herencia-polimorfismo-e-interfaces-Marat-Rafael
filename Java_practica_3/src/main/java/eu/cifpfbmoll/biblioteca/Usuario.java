@@ -7,7 +7,6 @@ superclase).
  */
 package eu.cifpfbmoll.biblioteca;
 
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,6 +15,7 @@ import java.util.Scanner;
  * @author Marat Rafael
  */
 public class Usuario extends Persona {
+
     static Scanner sc = new Scanner(System.in);
     //Atributos
     private String telefono;
@@ -30,8 +30,10 @@ public class Usuario extends Persona {
      */
     public Usuario() {
     }
+
     /**
      * constructor con todos atributos
+     *
      * @param listaReservas
      * @param telefono
      * @param direccion
@@ -40,17 +42,17 @@ public class Usuario extends Persona {
      * @param nombre
      * @param apellido1
      * @param apellido2
-     * @param edad 
+     * @param edad
      */
-    public Usuario( ArrayList<Reserva> listaReservas,
-                    String telefono, 
-                    String direccion, 
-                    String codigoPostal, 
-                    String correoElectronico,                      
-                    String nombre, 
-                    String apellido1, 
-                    String apellido2, 
-                    int edad) {
+    public Usuario(ArrayList<Reserva> listaReservas,
+            String telefono,
+            String direccion,
+            String codigoPostal,
+            String correoElectronico,
+            String nombre,
+            String apellido1,
+            String apellido2,
+            int edad) {
         // con suer accedemos a los campos de los atributos de la persona
         super(nombre, apellido1, apellido2, edad);
         this.telefono = telefono;
@@ -62,7 +64,8 @@ public class Usuario extends Persona {
 
     /**
      * constructor copia
-     * @param usuario 
+     *
+     * @param usuario
      */
     public Usuario(Usuario usuario) {
         //para aceder a campos del Persona, tengo convertir atributos del classe Persona en protected
@@ -74,9 +77,7 @@ public class Usuario extends Persona {
         this.listaReservas = usuario.listaReservas;
     }
 
-    
     //GETTER/SETTER
-
     public String getTelefono() {
         return telefono;
     }
@@ -119,37 +120,16 @@ public class Usuario extends Persona {
 
     @Override
     public String toString() {
-        return super.toString()+" Usuario{" + "telefono=" + telefono + ", direccion=" + direccion + ", codigo Postal=" + codigoPostal + ", correo Electronico=" + correoElectronico + ", listaReservas=" + listaReservas + '}'; 
+        return super.toString() + " Usuario{" + "telefono=" + telefono + ", direccion=" + direccion + ", codigo Postal=" + codigoPostal + ", correo Electronico=" + correoElectronico + ", listaReservas=" + listaReservas + '}';
     }
-/*
-    obsoleto, para borrar
-    @Override
-    public Persona solicitarDatosPersona() {
-        //solicitarDatosPersona del padre nos devuelve una persona lo almacenamos en nueva variable
-        Persona nuevaPersona = super.solicitarDatosPersona();
-        System.out.println("Telefono: ");
-        String nuevoTelefono = sc.nextLine();
-        System.out.println("Direccion: ");
-        String nuevoDireccion = sc.nextLine();
-        System.out.println("Codigo postal: ");
-        String nuevoCodigoPostal = sc.nextLine();
-        System.out.println("Correo electronico");
-        String nuevoCorreoElectronico=sc.nextLine();
-        
-        //para nuevo usuario creamos nuevo ArrayList de reservas
-        ArrayList<Reserva> nuevaListaReseva = new ArrayList();
-        // apartir de los datos creamos nuevo usuario
-        Usuario nuevoUsuario = new Usuario(nuevaPersona,nuevoTelefono, nuevoDireccion, nuevoCodigoPostal, nuevoCorreoElectronico, nuevaListaReseva);
-        return nuevoUsuario;
-    }//fin metodo solicitarDatosPersona
-*/
+
     /**
      * metodo para completar datos del Usuario existente
      */
     @Override
     public void solicitarDatosPersona() {
         // primero llamamos al padre y rellenamos campos de la persona
-        super.solicitarDatosPersona(); 
+        super.solicitarDatosPersona();
         System.out.println("Telefono: ");
         String nuevoTelefono = sc.nextLine();
         System.out.println("Direccion: ");
@@ -157,34 +137,84 @@ public class Usuario extends Persona {
         System.out.println("Codigo postal: ");
         String nuevoCodigoPostal = sc.nextLine();
         System.out.println("Correo electronico");
-        String nuevoCorreoElectronico=sc.nextLine();
-        
+        String nuevoCorreoElectronico = sc.nextLine();
+
         // insertamos datos indicados al Usuario
         this.setTelefono(nuevoTelefono);
         this.setDireccion(nuevoDireccion);
         this.setCodigoPostal(nuevoCodigoPostal);
         this.setCorreoElectronico(nuevoCorreoElectronico);
-        
+
     }
-    
 
     // metodo para controlar que no haya mas de 5 libros reservados
     /**
-     * 
+     *
      * @return false si hay mas de 5 libros en la lista de reservas
      */
-    public boolean librosControl(){
+    public boolean librosControl() {
         // acedemos a la lista de reservas del usuario, si su tamaño es menos que 5 devuelve true
-        if(this.getListaReservas().size()<5){
+        if (this.getListaReservas().size() < 5) {
             return true;
         }
         return false;
     }// finmetodo librosControl
- 
-    public void mostrarReservasUsuario(Usuario usuario){
+
+    public void mostrarReservasUsuario(Usuario usuario) {
         for (int i = 0; i < usuario.getListaReservas().size(); i++) {
-            System.out.println(usuario.getListaReservas().get(i).toString());           
+            System.out.println(usuario.getListaReservas().get(i).toString());
         }
     }
 
+    /**
+     * metodo para confirmar que usuario esta ne la lista de personas
+     *
+     * @param listaPersonas
+     */
+    public static int confirmarUsuario(ArrayList<Persona> listaPersonas) {
+        int posicion = -1;
+        System.out.println("Indica telefono del usuario: ");
+        String telefonoBuscar = sc.nextLine();
+        System.out.println("Indica correo del usuario: ");
+        String mailBuscar = sc.nextLine();
+        for (int i = 0; i < listaPersonas.size(); i++) {
+            // recorremos array buscando Usuarios
+            if (listaPersonas.get(i) instanceof Usuario) {
+                // hacemos casting y comparamos datos
+                if (((Usuario) listaPersonas.get(i)).getTelefono().equalsIgnoreCase(telefonoBuscar)
+                        && ((Usuario) listaPersonas.get(i)).getCorreoElectronico().equals(mailBuscar)) {
+
+                    System.out.println("Usuario confirmado");
+                    posicion = i;
+                    return posicion;
+                }
+            }
+        }
+        System.out.println("Usuario no confirmado");
+        return posicion;
+    }// fin metodo confirmarUsuario
+
+    /**
+     * metodo estatico para crear nuevo Usuario
+     *
+     * @param listaPersonas ArrayList de personas
+     */
+    public static void crearNuevoUsuarioParaLista(ArrayList<Persona> listaPersonas) {
+        Usuario usuarioNuevo = new Usuario();
+        usuarioNuevo.solicitarDatosPersona();
+        listaPersonas.add(usuarioNuevo);
+    }// fin crearNuevoUsuario
+
+    /**  HAY ERROR !!!
+     * metodo de la clase Usuario para mostrar todas reserva de usuario
+     */
+    public void mostrarReservas() {
+        if (this.getListaReservas().isEmpty()) {
+            System.out.println("No tiene reservas");
+        } else {
+            for (int i = 0; i < this.getListaReservas().size(); i++) {
+                System.out.println(this.getListaReservas().get(i).toString());
+            }
+        }
+    }// fin metodo mostrarReservas
 }// fin classe Usuario
