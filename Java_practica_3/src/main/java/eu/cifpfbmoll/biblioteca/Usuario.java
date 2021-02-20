@@ -213,7 +213,7 @@ public class Usuario extends Persona {
             System.out.println("No tiene reservas");
         } else {
             for (int i = 0; i < this.getListaReservas().size(); i++) {
-                System.out.println(this.getListaReservas().get(i).toString());
+                System.out.println(this.getListaReservas().get(i).mostrarInfoChula());
             }
         }
     }// fin metodo mostrarReservas
@@ -232,10 +232,23 @@ public class Usuario extends Persona {
 
     /**
      * metodo abstracto de la clase persona para cambiar contraseña
+     * en el Usuario en vez de contraseña usamos correo electronico
      */
     @Override
     public void cambiarContrasenia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       boolean contraseniasCoinciden = false;
+        do {   
+            System.out.println("Correo electronico se usa como contraseña en esta aplicacion");
+            System.out.println("Escribe nuevo correo electronico: ");
+            String nuevaContrasenia1 = sc.nextLine();
+            System.out.println("Vuelve a escribir nuevo correo electronico: ");
+            String nuevaContrasenia2 = sc.nextLine();
+            if(nuevaContrasenia1.equals(nuevaContrasenia2)){
+                contraseniasCoinciden = true;
+                this.setCorreoElectronico(nuevaContrasenia1);
+                System.out.println("Nueva contraseña establecida");
+            }           
+        } while (!contraseniasCoinciden);
     }
     
 }// fin classe Usuario

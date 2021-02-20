@@ -114,8 +114,8 @@ public class AppBiblioteca {
                       
                         do {
 
-                            System.out.println("*********Bibliotecario******");
-                            System.out.println("************MENU************");
+                            System.out.println("*************BIBLIOTECARIO***************");
+                            System.out.println("****************MENU*********************");
                             System.out.println("1 - Dar de alta nuevo Bibliotecario");
                             System.out.println("2 - Mostrar todos bibliotecarios");
                             System.out.println("3 - Dar de baja un bibliotecario");
@@ -124,10 +124,11 @@ public class AppBiblioteca {
                             System.out.println("6 - Mostrar todos libros");
                             System.out.println("7 - Mostrar solo libros disponibles");
                             System.out.println("8 - Añadir libros a la lista");
-                            System.out.println("9 - Eliminar libro de lalista");                           
+                            System.out.println("9 - Eliminar libro de la lista");                           
                             System.out.println("11 - Mostrar todos usuarios");
                             System.out.println("12 - Cambiar contraseña");
                             System.out.println("0 - Salir");
+                            System.out.println("******************************************");
                             byte opcionBibliotecario = sc.nextByte();
                             sc.nextLine();
                             switch (opcionBibliotecario) {
@@ -173,9 +174,11 @@ public class AppBiblioteca {
                                     Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());
                                     break;
                                 case 11:
+                                    //mostrar todos usuarios de biblioteca
                                     Usuario.mostrarTodosUsuarios(miBiblioteca.getListaPersonas());
                                     break;
                                 case 12:
+                                    // cambiar contraseña del bibliotecario actual
                                     bibliotecarioActual.cambiarContrasenia();
                                     break;
                                 case 0:
@@ -205,14 +208,16 @@ public class AppBiblioteca {
                             Usuario.crearNuevoUsuarioParaLista(miBiblioteca.getListaPersonas());
                         }
                     } else {
-                        usuario=(Usuario) miBiblioteca.getListaPersonas().get(posicionUsuario);
+                        usuario =(Usuario) miBiblioteca.getListaPersonas().get(posicionUsuario);
                         do {
-                            System.out.println("**********USUARIO*********");
-                            System.out.println("***********MENU**********");
+                            System.out.println("********************USUARIO*****************");
+                            System.out.println("*********************MENU*******************");
                             System.out.println("1 - Ver todos libros de la biblioteca");
                             System.out.println("2 - Ver libros disponibles de la biblioteca");
                             System.out.println("3 - Ver mis reservas");
+                            System.out.println("4 - Cambiar mi correo electronico");
                             System.out.println("0 - Salir");
+                            System.out.println("********************************************");
                             byte opcionUsuario = sc.nextByte();
                             sc.nextLine();
                             switch (opcionUsuario) {
@@ -225,6 +230,8 @@ public class AppBiblioteca {
                                 case 3:// ver mis reservas
                                     usuario.mostrarReservas();
                                     break;
+                                case 4:// cambiar correo electronico
+                                    usuario.cambiarContrasenia();
                                 case 0://salir
                                     salirUsuario = true;
                                     break;
@@ -232,9 +239,7 @@ public class AppBiblioteca {
                             }//fin switch Usuario
 
                         } while (!salirUsuario);
-
                     }
-
                     break;
                 case 0:
                     salirMenu = true;

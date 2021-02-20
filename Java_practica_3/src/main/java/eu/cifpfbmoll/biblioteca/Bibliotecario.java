@@ -121,7 +121,6 @@ public class Bibliotecario extends Persona {
         this.setContrasenia(nuevaContrasenia);
     }
 
-    
     public static int accesoBibliotecario(ArrayList<Persona> listaPersonas) {
         // posicion predeterminada -1, si encontramos en la lista de Personas cambiamos posicion
         int posicionBibliotecario = -1;
@@ -260,7 +259,7 @@ public class Bibliotecario extends Persona {
 
                         //--------------Creamos fecha-----------
                         // nuevo objeto que da formato a la fecha
-                        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MMMM-dd"); 
                         // nuevo objeto fecha local
                         LocalDate fechaReserva = LocalDate.now();
                         //a la fecha local aplicalos formato 
@@ -272,13 +271,20 @@ public class Bibliotecario extends Persona {
                         DateTimeFormatter formatHora = DateTimeFormatter.ofPattern("HH:mm:ss");
                         // aplicamos formato al objeto de la horaReserva
                         horaReserva.format(formatHora);
-                        //---------------------------------------
 
                         // copiamos libro en un nuevo objeto
                         Libro libroReservado = listaLibros.get(indiceLibro);
-                        // creamos nuevo objeto reserva, dentro tiene un libro reservado, fecha y hora
 
-                        Reserva nuevaReserva = new Reserva(libroReservado, fechaReserva.format(formatoFecha), horaReserva.format(formatHora));
+                        // creamos nuevo objeto reserva, 
+                        Reserva nuevaReserva = new Reserva();
+                        // le insertamos libro reservado
+                        nuevaReserva.setLibro(libroReservado);
+                        // insertamos fecha con su formato
+                        nuevaReserva.setFechaReserva(fechaReserva.format(formatoFecha));
+                        // insertamos hora con su formato
+                        nuevaReserva.setHoraReserva(horaReserva.format(formatHora));
+                        // insertamos fecha devolucion calculada por el metodo obtenerFechaDevolucion
+                        nuevaReserva.setFechaDevolucion(nuevaReserva.obtenerFechaDevolucion());
 
                         // acedemos a la lista de reservas de Usuario y le añadimos esta nueva reserva
                         usuario.getListaReservas().add(nuevaReserva);
