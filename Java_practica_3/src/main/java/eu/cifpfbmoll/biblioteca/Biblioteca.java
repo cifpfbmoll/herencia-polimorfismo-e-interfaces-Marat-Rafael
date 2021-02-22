@@ -26,16 +26,18 @@ public class Biblioteca {
     private ArrayList<Libro> listaLibros;
     private ArrayList<Persona> listaPersonas;
 
-    //CONSTRUCTOR
+    //CONSTRUCTORES
+    //constructor vacio
     public Biblioteca() {
     }
-
+    // constructor con todos atributos
     public Biblioteca(String nombreBiblioteca, ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
         this.nombreBiblioteca = nombreBiblioteca;
         this.listaLibros = listaLibros;
         this.listaPersonas = listaPersonas;
     }
 
+    //constructor copia
     public Biblioteca(Biblioteca biblioteca) {
         this.nombreBiblioteca = biblioteca.nombreBiblioteca;
         this.listaLibros = biblioteca.listaLibros;
@@ -47,6 +49,7 @@ public class Biblioteca {
         return nombreBiblioteca;
     }
 
+    // set nombre con un control para que primera linea empieza por mayuscula
     public void setNombreBiblioteca(String nombreBiblioteca) {
         while (nombreBiblioteca.charAt(0) < 65 || nombreBiblioteca.charAt(0) > 90) {
             // comprobamos con la tabla ASCII A=65 Z=90
@@ -78,7 +81,10 @@ public class Biblioteca {
         return "Biblioteca{" + "nombreBiblioteca=" + nombreBiblioteca + ", listaLibros=" + listaLibros + ", listaPersonas=" + listaPersonas + '}';
     }   
     // RESTO DE LOS METODOS
-    //Mostrar libros. Imprimirá por pantalla toda la lista de libros.(método instancia)
+    
+    /**
+     * Mostrar libros. Imprimirá por pantalla toda la lista de libros.(método instancia)
+     */
     public void mostrarTodosLibros(){
         //creamos variable para guardad aqui lista de libros
         ArrayList<Libro> listaLibrosMostrar = this.getListaLibros();
@@ -88,7 +94,10 @@ public class Biblioteca {
         }
     }// fin metodo MostrarTodosLibros
     
-    //Mostrar libros disponibles. Solo imprime la lista de los libros disponibles.(método instancia)
+
+    /**
+     *     //Mostrar libros disponibles. Solo imprime la lista de los libros disponibles.(método instancia)
+     */
     public void mostrarLibrosDisponibles(){
         // creamos variable ArrayList donde guardamos ArrayList de la biblioteca
         ArrayList<Libro>listaLibrosMostrarDisponibles = this.getListaLibros();

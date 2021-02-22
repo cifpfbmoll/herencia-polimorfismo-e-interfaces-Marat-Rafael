@@ -59,7 +59,7 @@ public class Bibliotecario extends Persona {
      */
     public Bibliotecario(Bibliotecario bibliotecario) {
         // con super acedemos a todo atributos de la persona
-        super(bibliotecario.nombre, bibliotecario.apellido1, bibliotecario.apellido2, bibliotecario.edad);
+        super(bibliotecario.getNombre(), bibliotecario.getApellido1(), bibliotecario.getApellido2(), bibliotecario.getEdad());
         this.puestoTrabajo = bibliotecario.puestoTrabajo;
         this.NIF = bibliotecario.NIF;
         this.contrasenia = bibliotecario.contrasenia;
@@ -121,6 +121,11 @@ public class Bibliotecario extends Persona {
         this.setContrasenia(nuevaContrasenia);
     }
 
+    /**
+     * Un metodo para comprobar si el usuario puede acceder 
+     * @param listaPersonas
+     * @return 
+     */
     public static int accesoBibliotecario(ArrayList<Persona> listaPersonas) {
         // posicion predeterminada -1, si encontramos en la lista de Personas cambiamos posicion
         int posicionBibliotecario = -1;

@@ -14,10 +14,10 @@ public abstract class Persona {
 
     Scanner sc = new Scanner(System.in);
     //ATRIBUTOS
-    protected String nombre;
-    protected String apellido1;
-    protected String apellido2;
-    protected int edad;
+    private String nombre;
+    private String apellido1;
+    private String apellido2;
+    private int edad;
 
     //CONSTRUCTORES
     public Persona() {

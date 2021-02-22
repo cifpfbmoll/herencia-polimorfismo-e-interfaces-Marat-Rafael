@@ -69,7 +69,7 @@ public class Usuario extends Persona {
      */
     public Usuario(Usuario usuario) {
         //para aceder a campos del Persona, tengo convertir atributos del classe Persona en protected
-        super(usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.edad);
+        super(usuario.getNombre(), usuario.getApellido1(), usuario.getApellido2(), usuario.getEdad());
         this.telefono = usuario.telefono;
         this.direccion = usuario.direccion;
         this.codigoPostal = usuario.codigoPostal;
