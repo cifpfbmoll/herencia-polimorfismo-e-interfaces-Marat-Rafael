@@ -16,6 +16,9 @@ public class AppBiblioteca {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        /**
+         * metodo para rellenar datos a la biblioteca
+         */
         Biblioteca miBiblioteca = inicializarBiblioteca();
 
         
@@ -24,6 +27,16 @@ public class AppBiblioteca {
         boolean salirUsuario = false;
         byte opcion;
 
+        // menuPrincipal con do while
+        menuPrincipal(miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
+        
+    }//fin main
+
+    // metodo menu Principal
+    public static void menuPrincipal(Biblioteca miBiblioteca, boolean salirBibliotecario, boolean salirUsuario, boolean salirMenu) {
+        byte opcion;
+        
+        
         do {
             System.out.println("********MENU***********");
             System.out.println("1 - Bibliotecario");
@@ -45,79 +58,9 @@ public class AppBiblioteca {
                       
                         do {
 
-                            System.out.println("*************BIBLIOTECARIO***************");
-                            System.out.println("****************MENU*********************");
-                            System.out.println("1 - Dar de alta nuevo Bibliotecario");
-                            System.out.println("2 - Mostrar todos bibliotecarios");
-                            System.out.println("3 - Dar de baja un bibliotecario");
-                            System.out.println("4 - Reservar libro");
-                            System.out.println("5 - Devolver libro");
-                            System.out.println("6 - Mostrar todos libros");
-                            System.out.println("7 - Mostrar solo libros disponibles");
-                            System.out.println("8 - Añadir libros a la lista");
-                            System.out.println("9 - Eliminar libro de la lista");                           
-                            System.out.println("11 - Mostrar todos usuarios");
-                            System.out.println("12 - Cambiar contraseña");
-                            System.out.println("0 - Salir");
-                            System.out.println("******************************************");
-                            byte opcionBibliotecario = sc.nextByte();
-                            sc.nextLine();
-                            switch (opcionBibliotecario) {
-                                case 1:// añadir nuevo bibliotecario
-                                    // creamos instancia vacia
-                                    Bibliotecario nuevoBibliotecario = new Bibliotecario();
-                                    // metodo nos rellena datos del bibliotecario
-                                    nuevoBibliotecario.solicitarDatosPersona();
-                                    // añadimos nuevoBibliotecario a la lista
-                                    miBiblioteca.getListaPersonas().add(nuevoBibliotecario);
-                                    break;
-                                case 2:
-                                    // mostramos todos bilotecarios de la lista
-                                    bibliotecarioActual.mostrarTodosBibliotecarios(miBiblioteca.getListaPersonas());
-                                    break;
-                                case 3:
-                                    //borramos un bibliotecario existente de la lista
-                                    bibliotecarioActual.borrarBibliotecario(miBiblioteca.getListaPersonas());
-                                    break;
-                                case 4:
-                                    // Reservar Libro
-                                    bibliotecarioActual.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
-                                    break;
-                                case 5:
-                                    // devolver libro
-                                    bibliotecarioActual.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
-                                    break;
-                                case 6:
-                                    // mostrar todos libros
-                                    Libro.mostrarTodosLibros(miBiblioteca.getListaLibros());
-                                    break;
-
-                                case 7:
-                                    // mostrar libros disponibles
-                                    Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
-                                    break;
-                                case 8:
-                                    // añadir libro a la biblioteca
-                                    Libro.crearLibroParaLista(miBiblioteca.getListaLibros());
-                                    break;
-                                case 9:
-                                    // eliminar libro de la biblioteca
-                                    Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());
-                                    break;
-                                case 11:
-                                    //mostrar todos usuarios de biblioteca
-                                    Usuario.mostrarTodosUsuarios(miBiblioteca.getListaPersonas());
-                                    break;
-                                case 12:
-                                    // cambiar contraseña del bibliotecario actual
-                                    bibliotecarioActual.cambiarContrasenia();
-                                    break;
-                                case 0:
-                                    // salir
-                                    salirBibliotecario = true;
-                                    break;
-
-                            }//fin switch
+                            salirBibliotecario = menuBibliotecario(miBiblioteca, bibliotecarioActual, salirBibliotecario);
+                            
+                            
                         } while (!salirBibliotecario);
                     } else {
                         // si no confirmado salimos
@@ -125,8 +68,9 @@ public class AppBiblioteca {
                         salirBibliotecario = true;
                     }
                     break;
-
-                // terminamos menu del bibliotecarioActual
+                    
+                    // terminamos menu del bibliotecarioActual
+                    
                 case 2:// menu del Usuario
                     // control de acceso del usuario creamos nuevo objeto Usuario
                     Usuario usuario = new Usuario();
@@ -141,36 +85,9 @@ public class AppBiblioteca {
                     } else {
                         
                         usuario =(Usuario) miBiblioteca.getListaPersonas().get(posicionUsuario);
-                        do {
-                            System.out.println("********************USUARIO*****************");
-                            System.out.println("*********************MENU*******************");
-                            System.out.println("1 - Ver todos libros de la biblioteca");
-                            System.out.println("2 - Ver libros disponibles de la biblioteca");
-                            System.out.println("3 - Ver mis reservas");
-                            System.out.println("4 - Cambiar mi correo electronico");
-                            System.out.println("0 - Salir");
-                            System.out.println("********************************************");
-                            byte opcionUsuario = sc.nextByte();
-                            sc.nextLine();
-                            switch (opcionUsuario) {
-                                case 1:// ver lista de libros
-                                    Libro.mostrarTodosLibros(miBiblioteca.getListaLibros());                                    
-                                    break;
-                                case 2:// ver lista de libros disponibles
-                                    Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
-                                    break;
-                                case 3:// ver mis reservas
-                                    usuario.mostrarReservas();
-                                    break;
-                                case 4:// cambiar correo electronico
-                                    usuario.cambiarContrasenia();
-                                case 0://salir
-                                    salirUsuario = true;
-                                    break;
-
-                            }//fin switch Usuario
-
-                        } while (!salirUsuario);
+                        
+                        menuUsuario(miBiblioteca, usuario, salirUsuario);
+                        
                     }
                     break;
                 case 0:
@@ -178,9 +95,135 @@ public class AppBiblioteca {
             }// fin switch MENU principal
             
         } while (!salirMenu);
-        
-    }//fin main
+    }// fin metodo menuPrincipal
 
+    /**
+     * metodo para mostrar menuUsuario
+     * @param miBiblioteca
+     * @param usuario
+     * @param salirUsuario 
+     */
+    public static void menuUsuario(Biblioteca miBiblioteca, Usuario usuario, boolean salirUsuario) {
+        do {
+            System.out.println("********************USUARIO*****************");
+            System.out.println("*********************MENU*******************");
+            System.out.println("1 - Ver todos libros de la biblioteca");
+            System.out.println("2 - Ver libros disponibles de la biblioteca");
+            System.out.println("3 - Ver mis reservas");
+            System.out.println("4 - Cambiar mi correo electronico");
+            System.out.println("0 - Salir");
+            System.out.println("********************************************");
+            byte opcionUsuario = sc.nextByte();
+            sc.nextLine();
+            switch (opcionUsuario) {
+                case 1:// ver lista de libros
+                    Libro.mostrarTodosLibros(miBiblioteca.getListaLibros());
+                    break;
+                case 2:// ver lista de libros disponibles
+                    Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
+                    break;
+                case 3:// ver mis reservas
+                    usuario.mostrarReservas();
+                    break;
+                case 4:// cambiar correo electronico
+                    usuario.cambiarContrasenia();
+                case 0://salir
+                    salirUsuario = true;
+                    break;
+                    
+            }//fin switch Usuario
+            
+        } while (!salirUsuario);
+    }// fin metodo menuUsuario
+
+    /**
+     * metodo para mortrar menuBibliotecario
+     * @param miBiblioteca
+     * @param bibliotecarioActual
+     * @param salirBibliotecario
+     * @return 
+     */
+    public static boolean menuBibliotecario(Biblioteca miBiblioteca, Bibliotecario bibliotecarioActual, boolean salirBibliotecario) {
+        System.out.println("*************BIBLIOTECARIO***************");
+        System.out.println("****************MENU*********************");
+        System.out.println("1 - Dar de alta nuevo Bibliotecario");
+        System.out.println("2 - Mostrar todos bibliotecarios");
+        System.out.println("3 - Dar de baja un bibliotecario");
+        System.out.println("4 - Reservar libro");
+        System.out.println("5 - Devolver libro");
+        System.out.println("6 - Mostrar todos libros");
+        System.out.println("7 - Mostrar solo libros disponibles");
+        System.out.println("8 - Añadir libros a la lista");
+        System.out.println("9 - Eliminar libro de la lista");
+        System.out.println("11 - Mostrar todos usuarios");
+        System.out.println("12 - Cambiar contraseña");
+        System.out.println("0 - Salir");
+        System.out.println("******************************************");
+        byte opcionBibliotecario = sc.nextByte();
+        sc.nextLine();
+        switch (opcionBibliotecario) {
+            case 1:// añadir nuevo bibliotecario
+                // creamos instancia vacia
+                Bibliotecario nuevoBibliotecario = new Bibliotecario();
+                // metodo nos rellena datos del bibliotecario
+                nuevoBibliotecario.solicitarDatosPersona();
+                // añadimos nuevoBibliotecario a la lista
+                miBiblioteca.getListaPersonas().add(nuevoBibliotecario);
+                break;
+            case 2:
+                // mostramos todos bilotecarios de la lista
+                bibliotecarioActual.mostrarTodosBibliotecarios(miBiblioteca.getListaPersonas());
+                break;
+            case 3:
+                //borramos un bibliotecario existente de la lista
+                bibliotecarioActual.borrarBibliotecario(miBiblioteca.getListaPersonas());
+                break;
+            case 4:
+                // Reservar Libro
+                bibliotecarioActual.reservarLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
+                break;
+            case 5:
+                // devolver libro
+                bibliotecarioActual.devolverLibro(miBiblioteca.getListaLibros(), miBiblioteca.getListaPersonas());
+                break;
+            case 6:
+                // mostrar todos libros
+                Libro.mostrarTodosLibros(miBiblioteca.getListaLibros());
+                break;
+                
+            case 7:
+                // mostrar libros disponibles
+                Libro.mostrarLibrosDisponibles(miBiblioteca.getListaLibros());
+                break;
+            case 8:
+                // añadir libro a la biblioteca
+                Libro.crearLibroParaLista(miBiblioteca.getListaLibros());
+                break;
+            case 9:
+                // eliminar libro de la biblioteca
+                Libro.borrarLibroDeLista(miBiblioteca.getListaLibros());
+                break;
+            case 11:
+                //mostrar todos usuarios de biblioteca
+                Usuario.mostrarTodosUsuarios(miBiblioteca.getListaPersonas());
+                break;
+            case 12:
+                // cambiar contraseña del bibliotecario actual
+                bibliotecarioActual.cambiarContrasenia();
+                break;
+            case 0:
+                // salir
+                salirBibliotecario = true;
+                break;
+                
+        }//fin switch
+        return salirBibliotecario;
+    }// fin menuBibliotecario
+
+    /**
+     * metodo para crear algumos bibliotecarios y usuarios en la biblioteca, para pruebas
+     * @return 
+     */
     public static Biblioteca inicializarBiblioteca() {
         //creamos instancia de la biblioteca !
         Biblioteca miBiblioteca = new Biblioteca("FBM", new ArrayList<Libro>(), new ArrayList<Persona>());
@@ -191,7 +234,7 @@ public class AppBiblioteca {
         Bibliotecario b3 = new Bibliotecario("B3", "333", "333", "Manolo", "Saez", "Grande", 22);
         Bibliotecario b4 = new Bibliotecario("B4", "444", "444", "Rafael", "Gion", "Gion", 38);
         Bibliotecario b5 = new Bibliotecario("B5", "555", "555", "Nadal", "Toro", "Justicia", 46);
-        // añadimos personal a la lista del personal
+        // añadimos 5 bibliotecarios a la lista del personal 
         miBiblioteca.getListaPersonas().add(b1);
         miBiblioteca.getListaPersonas().add(b2);
         miBiblioteca.getListaPersonas().add(b3);
@@ -199,18 +242,18 @@ public class AppBiblioteca {
         miBiblioteca.getListaPersonas().add(b5);
         // creamos algunos libros para la biblioteca para probar
         // Libro  atributos : ISBN +  titulo + autor  + editorial + numCopias  + numCopiasDisponible
-        Libro l1 = new Libro("001", "Divina comedia", "Dante", "La Pajarita Roja", 15, 10);
+        Libro l1 = new Libro("001", "Divina comedia", "Dante", "La Pajarita Roja", 50, 10);
         Libro l2 = new Libro("002", "Divina comedia", "Dante", "Algani Editorial", 55, 0);
-        Libro l3 = new Libro("003", "Divina comedia", "Dante", "Editorial Denes", 55, 55);
-        Libro l4 = new Libro("004", "Don Quijote de la Mancha 1", "Cervantes", "Andavira Editora", 55, 35);
-        Libro l5 = new Libro("005", "Don Quijote de la Mancha 2", "Cervantes", "Andavira Editora", 55, 33);
-        Libro l7 = new Libro("006", "El idiota", "Dostoievski", "La Pajarita Roja", 15, 0);
-        Libro l8 = new Libro("007", "El idiota", "Dostoievski", "Calambur Editorial", 15, 5);
-        Libro l9 = new Libro("008", "Almas muertas", "Dostoievski", "La Pajarita Roja", 11, 1);
+        Libro l3 = new Libro("003", "Divina comedia", "Dante", "Editorial Denes", 50, 50);
+        Libro l4 = new Libro("004", "Don Quijote de la Mancha 1", "Cervantes", "Andavira Editora", 50, 10);
+        Libro l5 = new Libro("005", "Don Quijote de la Mancha 2", "Cervantes", "Andavira Editora", 50, 10);
+        Libro l7 = new Libro("006", "El idiota", "Dostoievski", "La Pajarita Roja", 50, 0);
+        Libro l8 = new Libro("007", "El idiota", "Dostoievski", "Calambur Editorial", 50, 10);
+        Libro l9 = new Libro("008", "Almas muertas", "Dostoievski", "La Pajarita Roja", 50, 1);
         Libro l10 = new Libro("009", "Lolita", "Nabokov", "La Pajarita Roja", 100, 0);
-        Libro l20 = new Libro("010", "Romancero gitano", "Lorca", "Kraicon", 1000, 568);
-        Libro l21 = new Libro("011", "Romancero gitano", "Lorca", "Algani Editorial", 1000, 955);
-        Libro l22 = new Libro("012", "Romancero gitano", "Lorca", "Calambur Editorial", 95, 95);
+        Libro l20 = new Libro("010", "Romancero gitano", "Lorca", "Kraicon", 100, 50);
+        Libro l21 = new Libro("011", "Romancero gitano", "Lorca", "Algani Editorial", 100, 50);
+        Libro l22 = new Libro("012", "Romancero gitano", "Lorca", "Calambur Editorial", 50, 50);
         Libro l23 = new Libro("013", "Don Quijote de la Mancha 1", "Cervantes", "Calambur Editorial", 20, 0);
         Libro l24 = new Libro("014", "Don Quijote de la Mancha 2", "Cervantes", "Calambur Editorial", 20, 0);
         Libro l30 = new Libro("015", "Guerra y paz 1", "Tolstoi", "La Pajarita Roja", 20, 20);
@@ -243,7 +286,8 @@ public class AppBiblioteca {
         Usuario u4 = new Usuario(new ArrayList<Reserva>(), "44444", "calle Matamorros 33", "07698", "fernando@gmail.com", "Fernando", "Rey", "Velazquez", 24);
         Usuario u5 = new Usuario(new ArrayList<Reserva>(), "55555", "plaza Mayor 3", "07114", "rafael@gmail.com", "Rafael", "Guion", "Muñoz", 36);
         Usuario u6 = new Usuario(new ArrayList<Reserva>(), "1", "1", "1", "1", "R", "G", "M", 36);
-        //añadimos a la lista de personas
+        
+        //añadimos a la lista de personas 6 Usuarios
         miBiblioteca.getListaPersonas().add(u1);
         miBiblioteca.getListaPersonas().add(u2);
         miBiblioteca.getListaPersonas().add(u3);
@@ -251,5 +295,5 @@ public class AppBiblioteca {
         miBiblioteca.getListaPersonas().add(u5);
         miBiblioteca.getListaPersonas().add(u6);
         return miBiblioteca;
-    }
+    }// fin metodo inicializarBiblioteca
 }

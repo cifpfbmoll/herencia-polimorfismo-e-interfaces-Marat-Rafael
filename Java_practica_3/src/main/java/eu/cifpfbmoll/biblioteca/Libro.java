@@ -120,54 +120,62 @@ public class Libro {
         return "Libro{" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", numCopias=" + numCopias + ", numCopiasDisponibles=" + numCopiasDisponibles + '}';
     }
 
-    
     /**
      * metodo para mostrar todos libros de la biblioteca
-     * @param listaLibros 
+     *
+     * @param listaLibros
      */
-    public static void mostrarTodosLibros(ArrayList <Libro> listaLibros){
+    public static void mostrarTodosLibros(ArrayList<Libro> listaLibros) {
         for (int i = 0; i < listaLibros.size(); i++) {
-            System.out.println(listaLibros.get(i).toString());           
-        }       
-    }  
-    
+            System.out.println(listaLibros.get(i).toString());
+        }
+    }
+
     /**
      * metodo para mostrar libros si estan disponibles, > 0
-     * @param listaLibros 
+     *
+     * @param listaLibros
      */
-    public static void mostrarLibrosDisponibles(ArrayList<Libro> listaLibros){
-        
+    public static void mostrarLibrosDisponibles(ArrayList<Libro> listaLibros) {
+
         for (int i = 0; i < listaLibros.size(); i++) {
-            if(listaLibros.get(i).getNumCopiasDisponibles()>0){
+            if (listaLibros.get(i).getNumCopiasDisponibles() > 0) {
                 System.out.println(listaLibros.get(i).toString());
-            }          
+            }
         }
     }// fin metodo mostrar librosDisponibles
-    
+
     /**
-     * metodo para comprobar si libro indicado existe en la lista
-     * si existe devuelve su posicion ,
-     * si no existe devuelve -1
+     * metodo para comprobar si libro indicado existe en la lista si existe
+ devuelve su posicionLibro , si no existe devuelve -1
+     *
      * @param isbnBuscado
      * @param listaLibros
-     * @return posicion en la lista
+     * @return posicionLibro en la lista
      */
-    public static int confirmarLibro(String isbnBuscado, ArrayList<Libro> listaLibros){
-        int posicion = -1;
-        for (int i = 0; i < listaLibros.size(); i++) {
-            if(listaLibros.get(i).getISBN().equals(isbnBuscado)){
-                posicion = i;
-                return posicion;
-            }           
+    public static int confirmarLibro(String isbnBuscado, ArrayList<Libro> listaLibros) {
+        int posicionLibro = -1;
+        boolean encontradoLibro = false;
+        int j = 0;
+        while (!encontradoLibro && j < listaLibros.size()) {
+            // recorremos la lista y en cada elemento comparamos ISBN con isbnBuscado
+            if (listaLibros.get(j).getISBN().equals(isbnBuscado)) {
+                // si coincide
+                posicionLibro = j;
+                encontradoLibro = true;                               
+            }
+            j++;
         }
-        return posicion;
+        return posicionLibro;
     }// fin metodo confirmarLibro
-    
+
     /**
      * un metodo estatico para añadir un libro a la biblioteca
-     * @param listaLibros un ArrayList dela biblioteca que contiene lista de libros
+     *
+     * @param listaLibros un ArrayList dela biblioteca que contiene lista de
+     * libros
      */
-    public static void crearLibroParaLista(ArrayList<Libro>listaLibros){
+    public static void crearLibroParaLista(ArrayList<Libro> listaLibros) {
         System.out.println();
         System.out.println("ISBN: ");
         String isbnNuevoLibro = sc.nextLine();
@@ -183,31 +191,30 @@ public class Libro {
         System.out.println("Numero de copias disponibles: ");
         int numCopiasDisponiblesNuevoLibro = sc.nextInt();
         sc.nextLine();
-        
+
         // creamos libro 
         Libro libro = new Libro(isbnNuevoLibro, tituloNuevoLibro, autorNuevoLibro, editorialNuevoLibro, numCopiasNuevoLibro, numCopiasDisponiblesNuevoLibro);
         //añadimos a la lista de libros
         listaLibros.add(libro);
     }//fin crear libro para la lista
-    
-    public static void borrarLibroDeLista(ArrayList<Libro> listaLibros){
-        
+
+    public static void borrarLibroDeLista(ArrayList<Libro> listaLibros) {
+
         System.out.println("ISBN del libro para borrar");
         String isbnBorrar = sc.nextLine();
-        // comprobamos que libro existe enla lista, usamos metodo que devuelve posicion del libro, si no encuentra devuelve -1
+        // comprobamos que libro existe enla lista, usamos metodo que devuelve posicionLibro del libro, si no encuentra devuelve -1
         int posicionlibroParaBorrar = confirmarLibro(isbnBorrar, listaLibros);
-        if(posicionlibroParaBorrar != -1){
+        if (posicionlibroParaBorrar != -1) {
             System.out.println(listaLibros.get(posicionlibroParaBorrar));
             System.out.println("encontramos libro en la lista estas seguro que desea borrarlo ? si/no");
             String elecion = sc.nextLine();
-            if(elecion.equalsIgnoreCase("si")){                              
-                System.out.println("borrado con exito");   
+            if (elecion.equalsIgnoreCase("si")) {
+                System.out.println("borrado con exito");
                 listaLibros.remove(posicionlibroParaBorrar);
-            }else if(elecion.equalsIgnoreCase("no")){
+            } else if (elecion.equalsIgnoreCase("no")) {
                 System.out.println("has decidido no borrar libro");
-            }           
-        }       
+            }
+        }
     }// fin metodo borrarLibro
-    
-    
+
 }

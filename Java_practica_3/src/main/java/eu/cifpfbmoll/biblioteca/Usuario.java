@@ -167,31 +167,37 @@ public class Usuario extends Persona {
     }
 
     /**
-     * metodo para confirmar que usuario esta ne la lista de personas
+     * metodo para confirmar que usuario esta ne la lista de personas, devuelve un numero que es su posicion en la lista de Personas
+     * devuelve -1 si no encontrado
      *
-     * @param listaPersonas
+     * @param listaPersonas pasamos ArrayList de Personas
      */
     public static int confirmarUsuario(ArrayList<Persona> listaPersonas) {
-        int posicion = -1;
+        int posicionUsuario = -1;
+        boolean encontradoUsuario = false;
         System.out.println("Indica telefono del usuario: ");
         String telefonoBuscar = sc.nextLine();
         System.out.println("Indica correo del usuario: ");
         String mailBuscar = sc.nextLine();
-        for (int i = 0; i < listaPersonas.size(); i++) {
-            // recorremos array buscando Usuarios
-            if (listaPersonas.get(i) instanceof Usuario) {
-                // hacemos casting y comparamos datos
-                if (((Usuario) listaPersonas.get(i)).getTelefono().equalsIgnoreCase(telefonoBuscar)
-                        && ((Usuario) listaPersonas.get(i)).getCorreoElectronico().equals(mailBuscar)) {
-
-                    System.out.println("Usuario confirmado");
-                    posicion = i;
-                    return posicion;
+        // cambiamos a while
+        int j = 0;
+        while (!encontradoUsuario && j < listaPersonas.size()) {
+            // si una persona es usuario
+            if (listaPersonas.get(j) instanceof Usuario) {
+                // usamos casting para aceder a get Telegono y compararlo con lo que introduce usuario
+                if (((Usuario) listaPersonas.get(j)).getTelefono().equals(telefonoBuscar)
+                        // &&  comparamos mail
+                        && ((Usuario) listaPersonas.get(j)).getCorreoElectronico().equals(mailBuscar)) {
+                        // si las dos cosas coinciden guardamos posicion del usuario
+                        posicionUsuario = j;
+                        // usuario encontrado pasamos a true para salir del bucle
+                        encontradoUsuario = true;
                 }
             }
-        }
+            j++;
+        }//fin while
         System.out.println("Usuario no confirmado");
-        return posicion;
+        return posicionUsuario;
     }// fin metodo confirmarUsuario
 
     /**
@@ -205,8 +211,9 @@ public class Usuario extends Persona {
         listaPersonas.add(usuarioNuevo);
     }// fin crearNuevoUsuario
 
-    /**  HAY ERROR !!!
-     * metodo de la clase Usuario para mostrar todas reserva de usuario
+    /**
+     *  metodo de la clase Usuario para mostrar todas reserva de
+     * usuario
      */
     public void mostrarReservas() {
         if (this.getListaReservas().isEmpty()) {
@@ -217,38 +224,39 @@ public class Usuario extends Persona {
             }
         }
     }// fin metodo mostrarReservas
-    
+
     /**
      * metodo para mostrar todos usuarios registrados
-     * @param listaPersonas 
+     *
+     * @param listaPersonas
      */
-    public static void mostrarTodosUsuarios(ArrayList<Persona>listaPersonas){
+    public static void mostrarTodosUsuarios(ArrayList<Persona> listaPersonas) {
         for (int i = 0; i < listaPersonas.size(); i++) {
-            if(listaPersonas.get(i) instanceof Usuario){
+            if (listaPersonas.get(i) instanceof Usuario) {
                 System.out.println(listaPersonas.get(i).toString());
-            }           
+            }
         }
     }//fin metodo mostrarTodosUsuarios
 
     /**
-     * metodo abstracto de la clase persona para cambiar contraseña
-     * en el Usuario en vez de contraseña usamos correo electronico
+     * metodo abstracto de la clase persona para cambiar contraseña en el
+     * Usuario en vez de contraseña usamos correo electronico
      */
     @Override
     public void cambiarContrasenia() {
-       boolean contraseniasCoinciden = false;
-        do {   
+        boolean contraseniasCoinciden = false;
+        do {
             System.out.println("Correo electronico se usa como contraseña en esta aplicacion");
             System.out.println("Escribe nuevo correo electronico: ");
             String nuevaContrasenia1 = sc.nextLine();
             System.out.println("Vuelve a escribir nuevo correo electronico: ");
             String nuevaContrasenia2 = sc.nextLine();
-            if(nuevaContrasenia1.equals(nuevaContrasenia2)){
+            if (nuevaContrasenia1.equals(nuevaContrasenia2)) {
                 contraseniasCoinciden = true;
                 this.setCorreoElectronico(nuevaContrasenia1);
                 System.out.println("Nueva contraseña establecida");
-            }           
+            }
         } while (!contraseniasCoinciden);
     }
-    
+
 }// fin classe Usuario

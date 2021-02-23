@@ -18,10 +18,11 @@ import java.util.Scanner;
  *
  * @author Marat Rafael
  */
+// nueva subClase bibliotecario que es hijo de Persona
 public class Bibliotecario extends Persona {
-
+    
     static Scanner sc = new Scanner(System.in);
-
+    
     private String puestoTrabajo;
     private String NIF;
     private String contrasenia;
@@ -69,27 +70,27 @@ public class Bibliotecario extends Persona {
     public String getPuestoTrabajo() {
         return puestoTrabajo;
     }
-
+    
     public void setPuestoTrabajo(String puestoTrabajo) {
         this.puestoTrabajo = puestoTrabajo;
     }
-
+    
     public String getNIF() {
         return NIF;
     }
-
+    
     public void setNIF(String NIF) {
         this.NIF = NIF;
     }
-
+    
     public String getContrasenia() {
         return contrasenia;
     }
-
+    
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-
+    
     @Override
     public String toString() {
         return "Bibliotecario{" + "puestoTrabajo=" + puestoTrabajo + ", NIF=" + NIF + ", contrasenia=" + contrasenia + '}';
@@ -119,39 +120,49 @@ public class Bibliotecario extends Persona {
         this.setPuestoTrabajo(nuevoPuestoTrabajo);
         this.setNIF(nuevoNIF);
         this.setContrasenia(nuevaContrasenia);
-    }
+        
+    }// fin metodo solicitarDatosPersona
 
     /**
-     * Un metodo para comprobar si el usuario puede acceder 
-     * @param listaPersonas
-     * @return 
+     * Un metodo para comprobar si el usuario puede acceder
+     *
+     * @param listaPersonas lista de personas donde buscamos bibliotecario
+     * @return devuelve posicion del bibliotecario enla lista, o -1 si no lo
+     * encuentra
      */
     public static int accesoBibliotecario(ArrayList<Persona> listaPersonas) {
         // posicion predeterminada -1, si encontramos en la lista de Personas cambiamos posicion
+        boolean encontrado = false;
         int posicionBibliotecario = -1;
         System.out.println("NIF del Bibliotecario: ");
         String nifBuscado = sc.nextLine();
-
+        
         System.out.println("Contraseña: ");
         String contraseniaBuscada = sc.nextLine();
-
-        for (int i = 0; i < listaPersonas.size(); i++) {
-            if (listaPersonas.get(i) instanceof Bibliotecario) {
-                // casting para pasar Persona al Bibliotecario
-                // comparamos NIF 
-                if (((Bibliotecario) listaPersonas.get(i)).getNIF().equals(nifBuscado)
-                        // y comparamos contraseña
-                        || ((Bibliotecario) listaPersonas.get(i)).getContrasenia().equals(contraseniaBuscada)) {
-                    // si coinciden
-                    return i;
+        // cambiamos a while
+        int j = 0;
+        // tiene que cumplis las dos condiciones , si una no se cumple (por ejemplo encuntra elemento) sale del while
+        while (j < listaPersonas.size() && !encontrado) {
+            // comprobamos cada Persona, si es Bibliotecario
+            if (listaPersonas.get(j) instanceof Bibliotecario) {
+                // comparamos con datos introducidos
+                // comparamos NIF con nifBuscado usando casting
+                if (((Bibliotecario) listaPersonas.get(j)).getNIF().equals(nifBuscado)
+                        // &&  y comparamos getContraseña con contraseñaBuscada usando casting
+                        && ((Bibliotecario) listaPersonas.get(j)).getContrasenia().equals(contraseniaBuscada)) {
+                    // SOLO si las dos busquedas coinciden pasamos encontradoISBN a true
+                    encontrado = true;
+                    // en posicion guardamos index del ArrayList
+                    posicionBibliotecario = j;
                 }
             }
+            j++;
         }
         return posicionBibliotecario;
     }// fin metodo acesoBibliotecario
 
     public void mostrarTodosBibliotecarios(ArrayList<Persona> listaPersonas) {
-
+        // for para recorrer todo arraylista y mostrar cada elemento
         for (int i = 0; i < listaPersonas.size(); i++) {
             if (listaPersonas.get(i) instanceof Bibliotecario) {
                 System.out.println(((Bibliotecario) listaPersonas.get(i)).toString2());
@@ -159,67 +170,60 @@ public class Bibliotecario extends Persona {
         }
     }// fin metodo mostrarTodosBibliotecarios
 
+    /**
+     * Metodo para borrar bibliotecario de la lista de usuarios si lo encuentra
+     *
+     * @param listaPersonas como parametro pasamos un ArrayList de usuarios
+     */
     public void borrarBibliotecario(ArrayList<Persona> listaPersonas) {
         System.out.println("Indica NIF del Bibliotecario a borrar: ");
         String nifBorrar = sc.nextLine();
-        if (buscarBibiotecarioNifPosicion(nifBorrar, listaPersonas) == -1) {
+
+        //creamos variable donde guardamos index del bibliotecario, usamos metodo que devuelve posicion de bibliotecario en la lista, si no encuentra devuelve -1
+        int posicionBorrar = buscarBibiotecarioNifPosicion(nifBorrar, listaPersonas);
+        // si devuelve -1, no esta en la lista
+        if (posicionBorrar == -1) {
             System.out.println("No se encuentraeste Bibliotecario en la lista");
         } else {
-            for (int i = 0; i < listaPersonas.size(); i++) {
-                if (listaPersonas.get(i) instanceof Bibliotecario) {
-                    if (((Bibliotecario) listaPersonas.get(i)).getNIF().equalsIgnoreCase(nifBorrar)) {
-                        System.out.println(((Bibliotecario) listaPersonas.get(i)).toString2());
-                        System.out.println("Borrado de la lista");
-                        listaPersonas.remove(i);
-
-                    }
-                }
-            }
-        }
+            // si es una posicion destinta de -1, primero mostramos bibliotecario
+            System.out.println(listaPersonas.get(posicionBorrar).toString());
+            System.out.println("Borrado de la lista");
+            // borramos bibliotecario
+            listaPersonas.remove(posicionBorrar);
+            
+        } // fin else
     }// fin metodo borrarBibliotecario
 
     /**
      * metodo para comprobar si bibliotecario esta en la lista, devuelve su
      * posicion o -1 si no se encuentra
      *
-     * @param nifBuscado
-     * @param listaPersonas
-     * @return
+     * @param nifBuscado como parametro recibe un String con nif que buscamos
+     * @param listaPersonas Arraylist de Personas, usando casting tendremos que
+     * comprobar si es bibliotecario
+     * @return devuelve un numero que se refiere a la posicion del bibliotecario
+     * dentro de ArrayList, si no lo esncuentra devuelve -1
      */
     public int buscarBibiotecarioNifPosicion(String nifBuscado, ArrayList<Persona> listaPersonas) {
         // valor predeterminado sera -1, si encontramos al bibliotecario devolvemos su posicion en la lista de personas
         int posicion = -1;
-        //recoremos array
-        for (int i = 0; i < listaPersonas.size(); i++) {
-            //si elemento instanceof de Bibliotecario
-            if (listaPersonas.get(i) instanceof Bibliotecario) {
-                // comparamos con nif si es igual devolver true
-                if (((Bibliotecario) listaPersonas.get(i)).getNIF().equalsIgnoreCase(nifBuscado)) {
-                    posicion = i;
+        boolean encontrado = false;
+        //recoremos array, cambiamos a while
+        // mientras no encontramos posicion y no terminamos lista, debe cumplir las dos condiciones, para siguir buscando
+        int j = 0;
+        while (!encontrado && j < listaPersonas.size()) {
+            // comprobamos cada elemento de la lista de personas, si es instancia del Bibliotecario
+            if (listaPersonas.get(j) instanceof Bibliotecario) {
+                if ( // usamos casting para acceder a getNif
+                        ((Bibliotecario) listaPersonas.get(j)).getNIF().equals(nifBuscado)) {
+                    posicion = j;
+                    encontrado = true;
                 }
             }
+            j++;
         }
         return posicion;
     }// fin metodo buscar BibliotecarioNifBoolean
-
-    /**
-     *
-     * @param nifBuscado
-     * @param listaPersonas
-     */
-    public void buscarBibiotecarioNif(String nifBuscado, ArrayList<Persona> listaPersonas) {
-        //recoremos array
-        for (int i = 0; i < listaPersonas.size(); i++) {
-            //si elemento instanceof de Bibliotecario
-            if (listaPersonas.get(i) instanceof Bibliotecario) {
-                // comparamos con nif si es igual devolver true
-                if (((Bibliotecario) listaPersonas.get(i)).getNIF().equalsIgnoreCase(nifBuscado)) {
-
-                }
-            }
-        }
-
-    }// fin metodo buscar BibliotecarioNif
 
     /**
      * El método ​ reservarLibro​ , pedirá al usuario el teléfono y el correo
@@ -250,32 +254,21 @@ public class Bibliotecario extends Persona {
 
                 // llamamos metodo que nos devuelve indiceLibro del libro
                 indiceLibro = Libro.confirmarLibro(isbnBuscado, listaLibros);
-
+                
                 if (indiceLibro == -1) {
                     System.out.println("No se encuentra libro con ISBN " + isbnBuscado);
-
+                    
                 } else {
                     System.out.println("Encontramos un libro con ISBN indicado ");
                     System.out.println(listaLibros.get(indiceLibro).toString());
-
+                    
                     if (listaLibros.get(indiceLibro).getNumCopiasDisponibles() < 1) {
                         System.out.println("Lo siento no quedan copias disponibles");
                     } else {
-
-                        //--------------Creamos fecha-----------
-                        // nuevo objeto que da formato a la fecha
-                        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MMMM-dd"); 
-                        // nuevo objeto fecha local
-                        LocalDate fechaReserva = LocalDate.now();
-                        //a la fecha local aplicalos formato 
-                        fechaReserva.format(formatoFecha);
-                        //------------Creamos hora--------------
-                        // creamos objeto de la horaLocal
-                        LocalTime horaReserva = LocalTime.now();
-                        // creamos formato
-                        DateTimeFormatter formatHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-                        // aplicamos formato al objeto de la horaReserva
-                        horaReserva.format(formatHora);
+                        
+                        LocalDate fechaReserva = calcularFechaReserva();
+                        
+                        LocalTime horaReserva = calcularHoraReserva();
 
                         // copiamos libro en un nuevo objeto
                         Libro libroReservado = listaLibros.get(indiceLibro);
@@ -284,10 +277,10 @@ public class Bibliotecario extends Persona {
                         Reserva nuevaReserva = new Reserva();
                         // le insertamos libro reservado
                         nuevaReserva.setLibro(libroReservado);
-                        // insertamos fecha con su formato
-                        nuevaReserva.setFechaReserva(fechaReserva.format(formatoFecha));
-                        // insertamos hora con su formato
-                        nuevaReserva.setHoraReserva(horaReserva.format(formatHora));
+                        // insertamos fecha con su formato, en parentesis indicamos formato para representar resultado
+                        nuevaReserva.setFechaReserva(fechaReserva.format(DateTimeFormatter.ofPattern("yyyy-MMMM-dd")));
+                        // insertamos hora con su formato en parentesis indicamos formato para representar la hora
+                        nuevaReserva.setHoraReserva(horaReserva.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                         // insertamos fecha devolucion calculada por el metodo obtenerFechaDevolucion
                         nuevaReserva.setFechaDevolucion(nuevaReserva.obtenerFechaDevolucion());
 
@@ -300,7 +293,7 @@ public class Bibliotecario extends Persona {
                         numeroCopias = numeroCopias - 1;
                         // modificamos en la lista de libros
                         listaLibros.get(indiceLibro).setNumCopiasDisponibles(numeroCopias);
-
+                        
                         System.out.println("Reserva creada");
                         System.out.println(nuevaReserva.toString());
                     }
@@ -310,65 +303,99 @@ public class Bibliotecario extends Persona {
                 //System.out.println(usuario.getListaReservas().toString());
                 for (int i = 0; i < usuario.getListaReservas().size(); i++) {
                     System.out.println(usuario.getListaReservas().get(i).toString());
-
+                    
                 }
             }
         }
     }// fin metodo reservarLibro
 
     /**
-     * metodo para devolver libro a la biblioteca
+     * metodo para calcular la hora de crear reserva a partir de LocalTime,
+     * aplicando formato de DateTimeFormater
      *
-     * @param listaLibros
-     * @param listaPersonas
+     * @return devuelve la hora cuando creamos la reserva
+     */
+    public LocalTime calcularHoraReserva() {
+        //------------Creamos hora--------------
+        // creamos objeto de la horaLocal
+        LocalTime horaReserva = LocalTime.now();
+        // creamos formato
+        // DateTimeFormatter formatHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        // aplicamos formato al objeto de la horaReserva, en una linea con DateTimeFormater 
+        horaReserva.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return horaReserva;
+    }// fin metodo calcularHoraReserva
+
+    /**
+     * metodo para calcular la fecha de la reserva usando objeto de LocalDate y
+     * aplicando formato de DateTimeFormater
+     *
+     * @return devuelve la fecha cuando creamos la reserva
+     */
+    public LocalDate calcularFechaReserva() {
+        //--------------Creamos fecha-----------
+        // nuevo objeto que da formato a la fecha
+        //DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MMMM-dd");
+        // nuevo objeto fecha local
+        LocalDate fechaReserva = LocalDate.now();
+        //a la fecha local aplicalos formato , en parentesis indicamos formato de representar fecha
+        fechaReserva.format(DateTimeFormatter.ofPattern("yyyy-MMMM-dd"));
+        return fechaReserva;
+    }
+
+    /**
+     * metodo para devolver libro a la biblioteca , primero comprobamos que
+     * usuario existe
+     *
+     * @param listaLibros pasamos como parametroArrayList de libros
+     * @param listaPersonas pasamos como parametro ArrayList de personas
      */
     public void devolverLibro(ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
-
+        // primero llamamos metodo que nos devuelve un numero
         int indiceUsuario = Usuario.confirmarUsuario(listaPersonas);
-
+        // si el numero es destinto de -1, usuario existe en la lista
         if (indiceUsuario != -1) {
-
             // mostramos usuario usando casting
             Usuario usuarioConfirmado = (Usuario) listaPersonas.get(indiceUsuario);
             System.out.println(usuarioConfirmado.toString());
 
-            // si usuario tiene lista de reservas mas de 0 lostramos reservas
+            // si usuario tiene lista de reservas mas de 0 mostramos reservas para informar lo que tiene reservado
             if (usuarioConfirmado.getListaReservas().size() > 0) {
-
+                
                 System.out.println("Reservas del usuario");
                 System.out.println("************************");
                 // mostramos todas reservas actuales del usuario
                 usuarioConfirmado.mostrarReservasUsuario(usuarioConfirmado);
 
+                // preguntamos que libro desea devolver
                 System.out.println("************************");
                 System.out.println("ISBN del libro que devuelve usuario");
                 String isbnDevolver = sc.nextLine();
 
-                // recoreemos lista de reservas para comprobar que ISBN indicado coincide con ISBN de reservado
-                for (int i = 0; i < usuarioConfirmado.getListaReservas().size(); i++) {
-                    // si coincide
-                    if (usuarioConfirmado.getListaReservas().get(i).getLibro().getISBN().equals(isbnDevolver)) {
-                        // borramos elemento de la lista
-                        usuarioConfirmado.getListaReservas().remove(i);
+                // recoreemos lista de reservas para comprobar que ISBN indicado coincide con ISBN de reservado, cambiamos a while
+                boolean encontradoISBN = false;
+             
+                int j = 0;
+                // mientras no encontramos libro o no termina la lista de reservas , tiene que cumplir las dos condiciones para siguir buscar
+                while (!encontradoISBN && j < usuarioConfirmado.getListaReservas().size()) {                    
+                    if (usuarioConfirmado.getListaReservas().get(j).getLibro().getISBN().equals(isbnDevolver)) {
+                        // si coinciden libro de la reserva y libro escrita por usuario borramos la reserva que contiene este libro
+                        usuarioConfirmado.getListaReservas().remove(j);
                         System.out.println("Reserva borrada");
-                        usuarioConfirmado.mostrarReservasUsuario(usuarioConfirmado);
-                    } else {
+                        encontradoISBN = true;
+                    }else{
                         System.out.println("No hay libro con ISBN " + isbnDevolver);
                     }
+                    j++;
                 }
                 // ahora hay que aumentar numero de copias de libros disponibles
-                // recorremos lista de libros
-                for (int i = 0; i < listaLibros.size(); i++) {
-                    // cuando encontramos isbn que coinciden
-                    if (listaLibros.get(i).getISBN().equals(isbnDevolver)) {
-                        // acedemos a numero de copias
-                        int copiasActuales = listaLibros.get(i).getNumCopiasDisponibles();
-                        // modificamos +1
-                        copiasActuales++;
-                        // y devolvemos a la lista
-                        listaLibros.get(i).setNumCopiasDisponibles(copiasActuales);
-                    }
-                }
+                // llamamos metodo que nos devuelve la posicion del libro en la lista de libros
+                   int posicionISBN = Libro.confirmarLibro(isbnDevolver, listaLibros);
+                   // accedemos alli y aumentamos en uno libros disponibles
+                   int numCopiasDisponibles = listaLibros.get(posicionISBN).getNumCopiasDisponibles();
+                   numCopiasDisponibles = numCopiasDisponibles+1;
+                   listaLibros.get(posicionISBN).setNumCopiasDisponibles(numCopiasDisponibles);
+ 
             }// fin if usuario confirmado
         }
     }// fin metodo devolverLibro
