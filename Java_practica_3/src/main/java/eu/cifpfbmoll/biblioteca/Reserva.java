@@ -8,6 +8,8 @@ package eu.cifpfbmoll.biblioteca;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -127,6 +129,36 @@ public class Reserva implements Material {
                 + "         ..................................................";
 
         return infoChula;
-    }
+    }// fin metodo mostrarInfoChula
+    
+
+    /**
+     * Un metodo para buscar en un ArrayList libros segun nombre,
+     * si pasamos cadena vacia muestra todas reservas
+     * @param nombreLibroBuscar 
+     * @param listaReservas
+     * @return devuelve arrayList con reservas encontradas, sin repetir
+     */
+    public ArrayList <Reserva> buscarReservaConLibroEspecifico(String nombreLibroBuscar, ArrayList<Reserva> listaReservas){
+        ArrayList<Reserva> listaReservasEncontradas = new ArrayList();
+        
+        for (int i = 0; i < listaReservas.size(); i++) {
+            if(listaReservas.get(i).getLibro().getTitulo().contains(nombreLibroBuscar)){
+                listaReservasEncontradas.add(listaReservas.get(i));
+            }           
+        }
+        
+        // para que no muestra reservas repetidas aplicamos Set para elimnar valores dublicados
+        Set<Reserva> hashSet = new HashSet<Reserva>(listaReservasEncontradas);
+        listaReservasEncontradas.clear();
+        listaReservasEncontradas.addAll(hashSet);
+        
+//        for (Reserva lib: listaReservasEncontradas) {
+//           System.out.println(lib);
+//        }
+        return listaReservasEncontradas;
+    }//fin metodo buscarReservaConlibroEspecifico
+    
+
 
 }//FIN CLASS

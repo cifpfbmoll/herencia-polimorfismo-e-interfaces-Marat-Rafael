@@ -147,7 +147,7 @@ public class Libro {
 
     /**
      * metodo para comprobar si libro indicado existe en la lista si existe
- devuelve su posicionLibro , si no existe devuelve -1
+     * devuelve su posicionLibro , si no existe devuelve -1
      *
      * @param isbnBuscado
      * @param listaLibros
@@ -162,7 +162,7 @@ public class Libro {
             if (listaLibros.get(j).getISBN().equals(isbnBuscado)) {
                 // si coincide
                 posicionLibro = j;
-                encontradoLibro = true;                               
+                encontradoLibro = true;
             }
             j++;
         }
@@ -216,5 +216,135 @@ public class Libro {
             }
         }
     }// fin metodo borrarLibro
+
+    /**
+     *
+     
+    public static void buscarLibroBibliotecas(RedBibliotecas redBibliotecas) {
+        ArrayList<Libro> listaLibrosCoincideNombre = new ArrayList();        
+        int contador = 0;
+        System.out.println("Nombre del libro que buscamos en la red bibliotecaria: ");
+        String nombreLibroBuscar = sc.nextLine();
+        redBibliotecas.getListaBibliotecas();
+        // recorremos lista de bibliotecas y acedemos a cada biblioteca
+        for (int i = 0; i < redBibliotecas.getListaBibliotecas().size(); i++) {            
+            // dentro de cada biblioteca debemos recorrer lista de libros
+            for (int j = 0; j < redBibliotecas.getListaBibliotecas().get(j).getListaLibros().size(); j++) {
+
+                if (redBibliotecas.getListaBibliotecas().get(j).getListaLibros().get(j).getTitulo().equals(nombreLibroBuscar)) {
+                    contador++;
+                    listaLibrosCoincideNombre.add(redBibliotecas.getListaBibliotecas().get(j).getListaLibros().get(j));
+                }
+            }
+        }
+        if(contador == 0){
+            System.out.println("No encontramos ningun libro con nombre "+nombreLibroBuscar);
+        }else{
+            System.out.println("hemos encontrado "+ contador+" con nombre "+nombreLibroBuscar);
+            for (int i = 0; i < listaLibrosCoincideNombre.size(); i++) {
+                // recorremos lista para mostrar todos libros
+                System.out.println(listaLibrosCoincideNombre.get(i).toString());
+            }
+        }
+
+    }// fin metodo
+    * */
+    
+        /**
+     * Método de buscarLibroBiblioteca que buscará en la biblioteca qué usuarios tienen un libro,
+     * y la información de dicha reserva, o si el libro está disponible en la biblioteca. 
+     */
+    
+    /*
+    public static void buscarLibroBiblioteca(ArrayList <Persona> listaPersonas) {
+        int contadorEncontrados = 0;
+        System.out.println("Nombre del libro que buscamos: ");
+        String nombreLibroBuscar = sc.nextLine();
+        
+        // aqui guardamos todos usuarios que encontramos que tienen este libro reservado
+        ArrayList<Usuario> listaUsuariosEncontradas = new ArrayList();
+        
+        // arrayList para guardar todas reservas que encontramos
+        ArrayList<Reserva> listaReservasEncontradas = new ArrayList();
+        
+        for (int i = 0; i < listaPersonas.size(); i++) {
+            if( listaPersonas.get(i) instanceof Usuario){
+                
+                int tamanio = ((Usuario) listaPersonas.get(i)).getListaReservas().size();
+                for (int j = 0; j <  tamanio ; j++) {
+                    
+                    if( ((Usuario) listaPersonas.get(j)).getListaReservas().get(j).getLibro().getTitulo().contains(nombreLibroBuscar) ){
+                        contadorEncontrados++;
+                        // la persona que tiene este titulo guardamos en la lista
+                        listaUsuariosEncontradas.add( (Usuario) listaPersonas.get(j) );
+                        // añadimo en la lista de reserva reservas
+                        listaReservasEncontradas.add( ((Usuario) listaPersonas.get(j)).getListaReservas().get(j) );                       
+                    }                                     
+                }
+            }// fin if Usuario           
+        }// fin for
+        
+        if (contadorEncontrados == 0){
+            System.out.println("No encontramos nadien que tiene libro " + nombreLibroBuscar);
+        }else{
+            System.out.println("hemos encontrado "+contadorEncontrados+" con nombre "+nombreLibroBuscar);
+            System.out.println("Personas que tienen libro "+nombreLibroBuscar+" en su reserva");
+            for (int i = 0; i < listaUsuariosEncontradas.size(); i++) {
+               System.out.println(listaUsuariosEncontradas.get(i).toString());                
+            }            
+            System.out.println("Reservas que tienen libro ");
+            for (int i = 0; i < listaReservasEncontradas.size(); i++) {
+                System.out.println(listaReservasEncontradas.get(i).toString());               
+            }            
+        }
+    }// fin metodo
+*/
+    
+    /**
+     * Método de buscarLibroBiblioteca que buscará en la biblioteca qué usuarios tienen un libro, 
+     * y la información de dicha reserva, o si el libro está disponible en la biblioteca. 
+     * @param listaPersonas 
+     */
+    public static void buscarLibroBiblioteca(ArrayList<Persona> listaPersonas){
+        System.out.println("Nombre libro: ");
+        String nombreLibroBuscar =sc.nextLine();
+        
+        ArrayList<Reserva> listaLibrosBuscados = new ArrayList();
+        ArrayList<Usuario> listaUsuariosConReserva = new ArrayList();
+        
+        for (int i = 0; i < listaPersonas.size(); i++) {
+           if(listaPersonas.get(i) instanceof Usuario){
+               // casting a Usuario y acceso a lista de reservas              
+               for (int j = 0; j <  ((Usuario)listaPersonas.get(i)).getListaReservas().size() ; j++) {
+                   if( ((Usuario)listaPersonas.get(j)).getListaReservas().get(j).getLibro().getTitulo().contains(nombreLibroBuscar)){
+                       
+                   }
+                  // System.out.println( ((Usuario)listaPersonas.get(i)).getListaReservas().get(j).toString() );
+                   
+               }
+              
+           }
+            
+        }
+        
+        
+    }// fin metodo buscarLibroPersona
+    
+    /**
+     * metodo para buscar libros que contienen nombre introducido por usuario
+     * @param nombreLibroBuscado
+     * @param listaLibros 
+     */
+    public static void buscarLibroNombre(String nombreLibroBuscado,ArrayList<Libro>listaLibros){
+        ArrayList <Libro> listaLibrosEncontrados = new ArrayList();
+        for (int i = 0; i < listaLibros.size(); i++) {
+            if( listaLibros.get(i).getTitulo().contains(nombreLibroBuscado)){
+                listaLibrosEncontrados.add( listaLibros.get(i) );
+            }
+        }
+        for (Libro lib : listaLibrosEncontrados) {
+            System.out.println(lib);
+        }
+    }// fin metodo buscarLibroNombre
 
 }

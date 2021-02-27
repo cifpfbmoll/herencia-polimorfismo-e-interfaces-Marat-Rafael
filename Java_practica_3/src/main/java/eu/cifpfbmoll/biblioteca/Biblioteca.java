@@ -20,6 +20,7 @@ import java.util.Scanner;
  * @author Marat Rafael
  */
 public class Biblioteca {
+    public static Scanner sc = new Scanner(System.in);
 
     //atributos
     private String nombreBiblioteca;
@@ -109,5 +110,34 @@ public class Biblioteca {
             }           
         }       
     }//fin metodo mostrarLibrosDisponibles
+    
+    /**
+     * Método de buscarLibroBiblioteca que buscará en la biblioteca qué usuarios tienen un libro, 
+     * y la información de dicha reserva, 
+     * o si el libro está disponible en la biblioteca. 
+     */
+    public void buscarLibroBiblioteca(Biblioteca biblioteca){
+        ArrayList<Reserva> listaReservas = new ArrayList();
+        System.out.println("Nombre del libro: ");
+        String libroBuscado = sc.nextLine();
+        
+        for (int i = 0; i < biblioteca.getListaPersonas().size(); i++) {
+            if( biblioteca.getListaPersonas().get(i) instanceof Usuario){
+                
+              listaReservas = ((Usuario)biblioteca.getListaPersonas().get(i)).getListaReservas();
+              
+                for (int j = 0; j < listaReservas.size(); j++) {
+                    // aplicamos metodo para cada reserva que nos muestra libros reservados
+                    listaReservas = listaReservas.get(j).buscarReservaConLibroEspecifico(libroBuscado, listaReservas);
+                }                        
+            }
+        }// fin for
+        for (Reserva l : listaReservas) {
+            System.out.println(l);
+        }
+    }// fin metodo buscarLibroBiblioteca
+    public void buscarLibroBibliotecas(RedBibliotecas redBibliotecas){
+        
+    }
  
 }

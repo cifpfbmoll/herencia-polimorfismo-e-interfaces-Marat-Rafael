@@ -8,7 +8,9 @@ superclase).
 package eu.cifpfbmoll.biblioteca;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -167,8 +169,9 @@ public class Usuario extends Persona {
     }
 
     /**
-     * metodo para confirmar que usuario esta ne la lista de personas, devuelve un numero que es su posicion en la lista de Personas
-     * devuelve -1 si no encontrado
+     * metodo para confirmar que usuario esta ne la lista de personas, devuelve
+     * un numero que es su posicion en la lista de Personas devuelve -1 si no
+     * encontrado
      *
      * @param listaPersonas pasamos ArrayList de Personas
      */
@@ -188,10 +191,10 @@ public class Usuario extends Persona {
                 if (((Usuario) listaPersonas.get(j)).getTelefono().equals(telefonoBuscar)
                         // &&  comparamos mail
                         && ((Usuario) listaPersonas.get(j)).getCorreoElectronico().equals(mailBuscar)) {
-                        // si las dos cosas coinciden guardamos posicion del usuario
-                        posicionUsuario = j;
-                        // usuario encontrado pasamos a true para salir del bucle
-                        encontradoUsuario = true;
+                    // si las dos cosas coinciden guardamos posicion del usuario
+                    posicionUsuario = j;
+                    // usuario encontrado pasamos a true para salir del bucle
+                    encontradoUsuario = true;
                 }
             }
             j++;
@@ -212,8 +215,7 @@ public class Usuario extends Persona {
     }// fin crearNuevoUsuario
 
     /**
-     *  metodo de la clase Usuario para mostrar todas reserva de
-     * usuario
+     * metodo de la clase Usuario para mostrar todas reserva de usuario
      */
     public void mostrarReservas() {
         if (this.getListaReservas().isEmpty()) {
@@ -257,6 +259,44 @@ public class Usuario extends Persona {
                 System.out.println("Nueva contraseña establecida");
             }
         } while (!contraseniasCoinciden);
-    }
+    }// fin metodo cambiarContraseña
+
+    /**
+     * metodo para mostrar todos usuarios que tienen reserva
+     * @param listaPersonas 
+     */
+    public static void mostrarTodosUsuariosConReservas(ArrayList<Persona> listaPersonas) {
+        // nuevo arraylist para guardar todas personas que tiene reservas
+        ArrayList<Usuario> listaUsuariosConReserva = new ArrayList();
+    
+        for (int i = 0; i < listaPersonas.size(); i++) {
+            if (listaPersonas.get(i) instanceof Usuario) {
+                // casting a Usuario y acceso a lista de reservas              
+                for (int j = 0; j < ((Usuario) listaPersonas.get(i)).getListaReservas().size(); j++) {
+                    // si usuario tiene lista de reservas mas que 0, tiene reservas
+                    if (((Usuario) listaPersonas.get(i)).getListaReservas().size() > 0) {
+                        
+                        Usuario usuarioConReservas = ((Usuario) listaPersonas.get(i));
+                        // añadimos usuario en la lista de usuarios con reserva
+                        listaUsuariosConReserva.add(usuarioConReservas);
+                    }
+                }
+            }
+        }
+
+        // importamos Set y HashSet, para eliminar objetos dublicados    
+        // 
+        Set<Usuario> hashSet = new HashSet<>(listaUsuariosConReserva);
+        // borramos todo
+        listaUsuariosConReserva.clear();
+        // añadimos todo, pero sin repitir
+        listaUsuariosConReserva.addAll(hashSet);
+        
+        System.out.println("");
+        for (Usuario usuario : listaUsuariosConReserva) {
+            System.out.println(usuario);
+        }
+    }// fin metodo mostrarTodosUsuariosConReserva
+    
 
 }// fin classe Usuario
