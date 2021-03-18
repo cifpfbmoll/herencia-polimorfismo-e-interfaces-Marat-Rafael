@@ -24,7 +24,7 @@ public class Biblioteca {
 
     //atributos
     private String nombreBiblioteca;
-    private ArrayList<Libro> listaLibros;
+    private ArrayList<Libro> listaLibros ;
     private ArrayList<Persona> listaPersonas;
 
     //CONSTRUCTORES

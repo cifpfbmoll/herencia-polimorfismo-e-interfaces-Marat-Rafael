@@ -1,5 +1,6 @@
 package eu.cifpfbmoll.biblioteca;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,49 +43,56 @@ public class AppBiblioteca {
         boolean salirUsuario = false;
         byte opcion;
 
-        do {
-            System.out.println("");
-            System.out.println("*****ELIGE BIBLIOTECA******");
-            System.out.println(" 1 - Biblioteca CEPA Arenal");
-            System.out.println(" 2 - Biblioteca CEFP Francesc Borja Moll");
-            System.out.println(" 3 - Biblioteca Palma");
-            System.out.println(" 4 - Biblioteca Soller");
-            System.out.println(" 0 - Salir");
-            System.out.println("***************************");
-            System.out.println("");
-            byte elecionBibliotecaMenu = sc.nextByte();
-            sc.nextLine();
-            switch (elecionBibliotecaMenu) {
-                case 1:
-                    miBiblioteca = redBibliotecaria.getListaBibliotecas().get(0);
-                    miBiblioteca = inicializarBiblioteca(redBibliotecaria, 0);
-                    menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
-                    break;
-                case 2:
-                    miBiblioteca = redBibliotecaria.getListaBibliotecas().get(1);
-                    miBiblioteca = inicializarBiblioteca(redBibliotecaria, 1);
-                    menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
-                    break;
-                case 3:
-                    miBiblioteca = redBibliotecaria.getListaBibliotecas().get(2);
-                    miBiblioteca = inicializarBiblioteca(redBibliotecaria, 2);
-                    menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
-                    break;
-                case 4:
-                    miBiblioteca = redBibliotecaria.getListaBibliotecas().get(3);
-                    miBiblioteca = inicializarBiblioteca(redBibliotecaria, 3);
-                    menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
-                    break;
-                case 0:
-                    salirElecionBilioteca = true;
-                    break;
-                default:
-                    System.out.println("De momento solo hay bibliotecas disponibles: ");
-                    redBibliotecaria.mostrarTodasBibliotecas(redBibliotecaria.getListaBibliotecas());
+        try {
+            do {
+                System.out.println("");
+                System.out.println("*****ELIGE BIBLIOTECA******");
+                System.out.println(" 1 - Biblioteca CEPA Arenal");
+                System.out.println(" 2 - Biblioteca CEFP Francesc Borja Moll");
+                System.out.println(" 3 - Biblioteca Palma");
+                System.out.println(" 4 - Biblioteca Soller");
+                System.out.println(" 0 - Salir");
+                System.out.println("***************************");
+                System.out.println("");
 
-            }// fin switch elecionBibliotecaMenu
+                byte elecionBibliotecaMenu = sc.nextByte();
+                sc.nextLine();
+                switch (elecionBibliotecaMenu) {
+                    case 1:
+                        miBiblioteca = redBibliotecaria.getListaBibliotecas().get(0);
+                        miBiblioteca = inicializarBiblioteca(redBibliotecaria, 0);
+                        menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
+                        break;
+                    case 2:
+                        miBiblioteca = redBibliotecaria.getListaBibliotecas().get(1);
+                        miBiblioteca = inicializarBiblioteca(redBibliotecaria, 1);
+                        menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
+                        break;
+                    case 3:
+                        miBiblioteca = redBibliotecaria.getListaBibliotecas().get(2);
+                        miBiblioteca = inicializarBiblioteca(redBibliotecaria, 2);
+                        menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
+                        break;
+                    case 4:
+                        miBiblioteca = redBibliotecaria.getListaBibliotecas().get(3);
+                        miBiblioteca = inicializarBiblioteca(redBibliotecaria, 3);
+                        menuPrincipal(redBibliotecaria, miBiblioteca, salirBibliotecario, salirUsuario, salirMenu);
+                        break;
+                    case 0:
+                        salirElecionBilioteca = true;
+                        break;
+                    default:
+                        System.out.println("De momento solo hay bibliotecas disponibles: ");
+                        redBibliotecaria.mostrarTodasBibliotecas(redBibliotecaria.getListaBibliotecas());
 
-        } while (!salirElecionBilioteca);
+                }// fin switch elecionBibliotecaMenu
+
+            } while (!salirElecionBilioteca);
+        } catch (RuntimeException e) {
+            System.out.println("Opcion introducida mal");
+        }
+
+        sc.close();
 
         /**
          * metodo para rellenar datos a la biblioteca
@@ -92,7 +100,7 @@ public class AppBiblioteca {
     }//fin main
 
     // metodo menu Principal
-    public static void menuPrincipal(RedBibliotecas redBibliotecas, Biblioteca miBiblioteca, boolean salirBibliotecario, boolean salirUsuario, boolean salirMenu) {
+    public static void menuPrincipal(RedBibliotecas redBibliotecas, Biblioteca miBiblioteca, boolean salirBibliotecario, boolean salirUsuario, boolean salirMenu) throws RuntimeException {
         byte opcion;
 
         do {
@@ -107,20 +115,20 @@ public class AppBiblioteca {
             opcion = sc.nextByte();
             sc.nextLine();
             switch (opcion) {
-
-                case 1:// menu del bibliotecarioActual     
-
+                
+                case 1:// menu del bibliotecarioActual
+                    
                     int posicionDelBibliotecarioActual = Bibliotecario.accesoBibliotecario(miBiblioteca.getListaPersonas());
                     // llamamos metodo para confirmamr que este usuario existe
                     if (posicionDelBibliotecarioActual != -1) {
                         // si confirmamos bibliotecarioActual mostramos menu
-                        // creamos una instancia del bibliotecario que actualmente esta en menu 
+                        // creamos una instancia del bibliotecario que actualmente esta en menu
                         Bibliotecario bibliotecarioActual = (Bibliotecario) miBiblioteca.getListaPersonas().get(posicionDelBibliotecarioActual);
-
+                        
                         do {
-
+                            
                             salirBibliotecario = menuBibliotecario(miBiblioteca, bibliotecarioActual, salirBibliotecario);
-
+                            
                         } while (!salirBibliotecario);
                     } else {
                         // si no confirmado salimos
@@ -128,8 +136,8 @@ public class AppBiblioteca {
                         salirBibliotecario = true;
                     }
                     break;
-
-                // terminamos menu del bibliotecarioActual
+                    
+                    // terminamos menu del bibliotecarioActual
                 case 2:// menu del Usuario
                     // control de acceso del usuario creamos nuevo objeto Usuario
                     Usuario usuario = new Usuario();
@@ -142,19 +150,23 @@ public class AppBiblioteca {
                             Usuario.crearNuevoUsuarioParaLista(miBiblioteca.getListaPersonas());
                         }
                     } else {
-
+                        
                         usuario = (Usuario) miBiblioteca.getListaPersonas().get(posicionUsuario);
-
-                        menuUsuario(redBibliotecas, miBiblioteca, usuario, salirUsuario);
-
+                        try {
+                            menuUsuario(redBibliotecas, miBiblioteca, usuario, salirUsuario);
+                        } catch (RuntimeException e) {
+                            System.out.println("Opcion elegida mal");
+                        }
+                        
                     }
                     break;
-
+                    
                 case 0:
                     salirMenu = true;
             }// fin switch MENU principal
-
+            
         } while (!salirMenu);
+
     }// fin metodo menuPrincipal
 
     /**
@@ -164,7 +176,7 @@ public class AppBiblioteca {
      * @param usuario
      * @param salirUsuario
      */
-    public static void menuUsuario(RedBibliotecas redBibliotecas, Biblioteca miBiblioteca, Usuario usuario, boolean salirUsuario) {
+    public static void menuUsuario(RedBibliotecas redBibliotecas, Biblioteca miBiblioteca, Usuario usuario, boolean salirUsuario) throws RuntimeException {
         do {
             System.out.println("********************USUARIO*****************");
             System.out.println("*********************MENU*******************");
@@ -286,7 +298,7 @@ public class AppBiblioteca {
                 String nomLib = sc.nextLine();
                 Libro.buscarLibroNombre(nomLib, miBiblioteca.getListaLibros());
                 break;
-            case 14: 
+            case 14:
                 Usuario.mostrarTodosUsuariosConReservas(miBiblioteca.getListaPersonas());
                 break;
             case 15:
@@ -381,17 +393,17 @@ public class AppBiblioteca {
 
         // creamos algunos Usuarios de la biblioteca
         //Usuario( ArrayList<Reserva> listaReservas,telefono,  direcion, codigopostal, correo, nombre, apellido1, apellido2, edad
-        Usuario u1 = new Usuario(new ArrayList<Reserva>(), "11111", "calle General Riera 11", "07552", "jose@gmail.com", "Jose", "Alonso", "Zapatero", 33);
+        Usuario u1 = new Usuario(new ArrayList<>(), "11111", "calle General Riera 11", "07552", "jose@gmail.com", "Jose", "Alonso", "Zapatero", 33);
         Usuario u2 = new Usuario(new ArrayList<Reserva>(), "22222", "caratera Militar 122", "07592", "antonio@gmail.com", "Antonio", "Garcia", "Serrano", 23);
         Usuario u3 = new Usuario(new ArrayList<Reserva>(), "33333", "plaza Paris 45", "07232", "david@gmail.com", "David", "Fernandez", "Goya", 43);
         Usuario u4 = new Usuario(new ArrayList<Reserva>(), "44444", "calle Matamorros 33", "07698", "fernando@gmail.com", "Fernando", "Rey", "Velazquez", 24);
         Usuario u5 = new Usuario(new ArrayList<Reserva>(), "55555", "plaza Mayor 3", "07114", "rafael@gmail.com", "Rafael", "Guion", "Muñoz", 36);
         Usuario u = new Usuario(new ArrayList<Reserva>(), "1", "1", "1", "1", "R", "G", "M", 11);
-        
+
         // un par de reservas para probar
         Reserva r1 = new Reserva(l1, "2021-febrero-25", "06:12:27", "2021-marzo-25");
         Reserva r2 = new Reserva(l4, "2021-febrero-25", "06:12:27", "2021-marzo-25");
-        
+
         // reservas añadimos al usuario u, el esta en todas  bibliotecas
         u.getListaReservas().add(r1);
         u.getListaReservas().add(r2);

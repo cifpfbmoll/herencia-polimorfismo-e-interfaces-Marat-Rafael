@@ -32,7 +32,7 @@ public class Reserva implements Material {
         id = IDreserva; // y su valor se guarda en variable id
     }
 
-    public Reserva(Libro libro, String fechaReserva, String horaReserva,String fechaDevolucion) {
+    public Reserva(Libro libro, String fechaReserva, String horaReserva, String fechaDevolucion) {
         IDreserva++;
         id = IDreserva;
         this.libro = libro;
@@ -59,7 +59,6 @@ public class Reserva implements Material {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    
     public int getId() {
         return id;
     }
@@ -97,8 +96,6 @@ public class Reserva implements Material {
         return "Reserva{" + "id=" + id + ", libro=" + libro + ", fechaReserva=" + fechaReserva + ", horaReserva=" + horaReserva + ", fechaDevolucion=" + fechaDevolucion + '}';
     }
 
-
-
     @Override
     public String obtenerFechaDevolucion() {
         String fechaDevolucionLibro = "";
@@ -122,43 +119,41 @@ public class Reserva implements Material {
     // no lo se esto se puede llamar chulo, pero un poco mas bonito
     public String mostrarInfoChula() {
         String infoChula = "................datos de reserva.................\n"
-                + "         Reserva "+this.getId()+"\n"
-                + "         libro "+this.getLibro().getTitulo()+"\n"
-                + "         Reservado dia "+this.getFechaReserva()+" a las "+this.getHoraReserva()+"\n"
-                + "         Hay que devolver "+this.getFechaDevolucion()+"\n"
+                + "         Reserva " + this.getId() + "\n"
+                + "         libro " + this.getLibro().getTitulo() + "\n"
+                + "         Reservado dia " + this.getFechaReserva() + " a las " + this.getHoraReserva() + "\n"
+                + "         Hay que devolver " + this.getFechaDevolucion() + "\n"
                 + "         ..................................................";
 
         return infoChula;
     }// fin metodo mostrarInfoChula
-    
 
     /**
-     * Un metodo para buscar en un ArrayList libros segun nombre,
-     * si pasamos cadena vacia muestra todas reservas
-     * @param nombreLibroBuscar 
+     * Un metodo para buscar en un ArrayList libros segun nombre, si pasamos
+     * cadena vacia muestra todas reservas
+     *
+     * @param nombreLibroBuscar
      * @param listaReservas
      * @return devuelve arrayList con reservas encontradas, sin repetir
      */
-    public ArrayList <Reserva> buscarReservaConLibroEspecifico(String nombreLibroBuscar, ArrayList<Reserva> listaReservas){
+    public ArrayList<Reserva> buscarReservaConLibroEspecifico(String nombreLibroBuscar, ArrayList<Reserva> listaReservas) {
         ArrayList<Reserva> listaReservasEncontradas = new ArrayList();
-        
+
         for (int i = 0; i < listaReservas.size(); i++) {
-            if(listaReservas.get(i).getLibro().getTitulo().contains(nombreLibroBuscar)){
+            if (listaReservas.get(i).getLibro().getTitulo().contains(nombreLibroBuscar)) {
                 listaReservasEncontradas.add(listaReservas.get(i));
-            }           
+            }
         }
-        
+
         // para que no muestra reservas repetidas aplicamos Set para elimnar valores dublicados
         Set<Reserva> hashSet = new HashSet<Reserva>(listaReservasEncontradas);
         listaReservasEncontradas.clear();
         listaReservasEncontradas.addAll(hashSet);
-        
+
 //        for (Reserva lib: listaReservasEncontradas) {
 //           System.out.println(lib);
 //        }
         return listaReservasEncontradas;
     }//fin metodo buscarReservaConlibroEspecifico
-    
-
 
 }//FIN CLASS

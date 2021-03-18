@@ -117,7 +117,7 @@ public class Libro {
     //TOSTRING
     @Override
     public String toString() {
-        return "Libro{" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", numCopias=" + numCopias + ", numCopiasDisponibles=" + numCopiasDisponibles + '}';
+        return "Libro {" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", numCopias=" + numCopias + ", numCopiasDisponibles=" + numCopiasDisponibles + '}';
     }
 
     /**
@@ -319,15 +319,10 @@ public class Libro {
                    if( ((Usuario)listaPersonas.get(j)).getListaReservas().get(j).getLibro().getTitulo().contains(nombreLibroBuscar)){
                        
                    }
-                  // System.out.println( ((Usuario)listaPersonas.get(i)).getListaReservas().get(j).toString() );
-                   
-               }
-              
-           }
-            
-        }
-        
-        
+                  // System.out.println( ((Usuario)listaPersonas.get(i)).getListaReservas().get(j).toString() );                  
+               }  
+           }           
+        }      
     }// fin metodo buscarLibroPersona
     
     /**

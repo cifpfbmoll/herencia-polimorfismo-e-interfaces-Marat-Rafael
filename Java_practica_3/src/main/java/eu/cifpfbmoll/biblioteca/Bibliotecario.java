@@ -103,7 +103,7 @@ public class Bibliotecario extends Persona {
 
     // resto de metodos
     /**
-     * metodo para rellenar datos del Bibliotecario
+     * metodo para rellenar datos del Bibliotecario, metodo de instancia
      */
     @Override
     public void solicitarDatosPersona() {
@@ -150,7 +150,7 @@ public class Bibliotecario extends Persona {
                 if (((Bibliotecario) listaPersonas.get(j)).getNIF().equals(nifBuscado)
                         // &&  y comparamos getContraseña con contraseñaBuscada usando casting
                         && ((Bibliotecario) listaPersonas.get(j)).getContrasenia().equals(contraseniaBuscada)) {
-                    // SOLO si las dos busquedas coinciden pasamos encontradoISBN a true
+                    // SOLO si las dos busquedas coinciden pasamos encontrado a true
                     encontrado = true;
                     // en posicion guardamos index del ArrayList
                     posicionBibliotecario = j;
@@ -240,7 +240,7 @@ public class Bibliotecario extends Persona {
         // aqui guardamos la indiceLibro de la persona que va hacer reserva
         int indiceUsuario = Usuario.confirmarUsuario(listaPersonas);
         if (indiceUsuario != -1) {
-            // si usuario existecreamos objeto Usuario y rellenamos con datos del ArrayList
+            // si usuario existe creamos objeto Usuario y rellenamos con datos del ArrayList
             Usuario usuario = new Usuario();
             usuario = (Usuario) listaPersonas.get(indiceUsuario);
             System.out.println(usuario.toString());
@@ -335,7 +335,7 @@ public class Bibliotecario extends Persona {
     public LocalDate calcularFechaReserva() {
         //--------------Creamos fecha-----------
         // nuevo objeto que da formato a la fecha
-        //DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MMMM-dd");
+        // DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MMMM-dd");
         // nuevo objeto fecha local
         LocalDate fechaReserva = LocalDate.now();
         //a la fecha local aplicalos formato , en parentesis indicamos formato de representar fecha
