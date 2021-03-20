@@ -129,7 +129,7 @@ public class Usuario extends Persona {
      * metodo para completar datos del Usuario existente
      */
     @Override
-    public void solicitarDatosPersona() {
+    public void solicitarDatosPersona() throws Exception{
         // primero llamamos al padre y rellenamos campos de la persona
         super.solicitarDatosPersona();
         System.out.println("Telefono: ");
@@ -208,7 +208,7 @@ public class Usuario extends Persona {
      *
      * @param listaPersonas ArrayList de personas
      */
-    public static void crearNuevoUsuarioParaLista(ArrayList<Persona> listaPersonas) {
+    public static void crearNuevoUsuarioParaLista(ArrayList<Persona> listaPersonas) throws Exception{
         Usuario usuarioNuevo = new Usuario();
         usuarioNuevo.solicitarDatosPersona();
         listaPersonas.add(usuarioNuevo);

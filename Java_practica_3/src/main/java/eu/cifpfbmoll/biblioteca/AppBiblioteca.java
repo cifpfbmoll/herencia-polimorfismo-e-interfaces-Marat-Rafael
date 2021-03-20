@@ -86,12 +86,11 @@ public class AppBiblioteca {
                         redBibliotecaria.mostrarTodasBibliotecas(redBibliotecaria.getListaBibliotecas());
 
                 }// fin switch elecionBibliotecaMenu
-
+              
             } while (!salirElecionBilioteca);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             System.out.println("Opcion introducida mal");
         }
-
         sc.close();
 
         /**
@@ -100,7 +99,7 @@ public class AppBiblioteca {
     }//fin main
 
     // metodo menu Principal
-    public static void menuPrincipal(RedBibliotecas redBibliotecas, Biblioteca miBiblioteca, boolean salirBibliotecario, boolean salirUsuario, boolean salirMenu) throws RuntimeException {
+    public static void menuPrincipal(RedBibliotecas redBibliotecas, Biblioteca miBiblioteca, boolean salirBibliotecario, boolean salirUsuario, boolean salirMenu) throws Exception {
         byte opcion;
 
         do {
@@ -222,7 +221,7 @@ public class AppBiblioteca {
      * @param salirBibliotecario
      * @return
      */
-    public static boolean menuBibliotecario(Biblioteca miBiblioteca, Bibliotecario bibliotecarioActual, boolean salirBibliotecario) {
+    public static boolean menuBibliotecario(Biblioteca miBiblioteca, Bibliotecario bibliotecarioActual, boolean salirBibliotecario) throws Exception{
         System.out.println("*************BIBLIOTECARIO***************");
         System.out.println("****************MENU*********************");
         System.out.println("1 - Dar de alta nuevo Bibliotecario");

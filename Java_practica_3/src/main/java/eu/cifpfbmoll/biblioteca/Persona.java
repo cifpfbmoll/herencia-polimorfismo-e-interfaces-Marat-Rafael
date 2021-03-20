@@ -23,26 +23,28 @@ public abstract class Persona {
     public Persona() {
     }
 
+    // usamos setters,lo que nos obliga declararlo como final
     public Persona(String nombre, String apellido1, String apellido2, int edad) {
-        this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.edad = edad;
+        this.setNombre(nombre);
+        this.setApellido1(apellido1);
+        this.setApellido2(apellido2);
+        this.setEdad(edad);
     }
 
+    // usamos setters
     public Persona(Persona persona) {
-        this.nombre = persona.nombre;
-        this.apellido1 = persona.apellido1;
-        this.apellido2 = persona.apellido2;
-        this.edad = persona.edad;
+        this.setNombre(persona.getNombre());
+        this.setApellido1(persona.getApellido1());
+        this.setApellido2(persona.getApellido2());
+        this.setEdad(persona.getEdad());
     }
 
     //GETTER/SETTER
     public String getNombre() {
         return nombre;
     }
-
-    public void setNombre(String nombre) {
+    // es final porque su uso en constructor obliga 
+    public final void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -50,23 +52,24 @@ public abstract class Persona {
         return apellido1;
     }
 
-    public void setApellido1(String apellido1) {
+    // es final porque su uso en constructor obliga 
+    public final void setApellido1(String apellido1) {
         this.apellido1 = apellido1;
     }
 
     public String getApellido2() {
         return apellido2;
     }
-
-    public void setApellido2(String apellido2) {
+    // es final porque su uso en constructor obliga 
+    public final void setApellido2(String apellido2) {
         this.apellido2 = apellido2;
     }
 
     public int getEdad() {
         return edad;
     }
-
-    public void setEdad(int edad) {
+    // es final porque su uso en constructor obliga 
+    public final void setEdad(int edad) {
         this.edad = edad;
     }
 
@@ -77,33 +80,27 @@ public abstract class Persona {
     }
 
     //METODOS
-
-    
-        /**
-     * un método llamado ​ solicitarDatosPersona de la clase Persona, 
-     * rellena datos de una persona existente
+    /**
+     * metodo solicitarDatosPersona para rellenar datos del objeto ya creado
      *
-     * @return persona
+     *
      */
-    public void solicitarDatosPersona() {
+    public void solicitarDatosPersona() throws Exception{
         System.out.println("Nombre: ");
-        String nuevoNombre = sc.nextLine();
+        this.setNombre(sc.nextLine());
+
         System.out.println("Primer apellido: ");
-        String nuevoApellido1 = sc.nextLine();
+        this.setApellido1(sc.nextLine());
+
         System.out.println("Segundo apellido: ");
-        String nuevoApellido2 = sc.nextLine();
+        this.setApellido2(sc.nextLine());
         System.out.println("Edad: ");
-        int nuevoEdad = sc.nextInt();
-        sc.nextLine();
-        // rellenamos datos de la persona
-        this.setNombre(nuevoNombre);
-        this.setApellido1(nuevoApellido1);
-        this.setApellido2(nuevoApellido2);
-        this.setEdad(nuevoEdad);
+
+        this.setEdad(sc.nextInt());
+
     }//fin metodo solicitarDatosPersona
-    
+
     //declaramos metodo abstracto para cambiar contraseña
     public abstract void cambiarContrasenia();
-    
-    
+
 }

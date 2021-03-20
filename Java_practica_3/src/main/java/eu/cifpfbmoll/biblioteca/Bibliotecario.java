@@ -47,9 +47,9 @@ public class Bibliotecario extends Persona {
     public Bibliotecario(String puestoTrabajo, String NIF, String contrasenia, String nombre, String apellido1, String apellido2, int edad) {
         // super acedemos a todos atributos del persona
         super(nombre, apellido1, apellido2, edad);
-        this.puestoTrabajo = puestoTrabajo;
-        this.NIF = NIF;
-        this.contrasenia = contrasenia;
+        this.setPuestoTrabajo(puestoTrabajo);
+        this.setNIF(NIF);
+        this.setContrasenia(contrasenia);
     }
 
     /**
@@ -61,9 +61,9 @@ public class Bibliotecario extends Persona {
     public Bibliotecario(Bibliotecario bibliotecario) {
         // con super acedemos a todo atributos de la persona
         super(bibliotecario.getNombre(), bibliotecario.getApellido1(), bibliotecario.getApellido2(), bibliotecario.getEdad());
-        this.puestoTrabajo = bibliotecario.puestoTrabajo;
-        this.NIF = bibliotecario.NIF;
-        this.contrasenia = bibliotecario.contrasenia;
+        this.setPuestoTrabajo(puestoTrabajo);
+        this.setNIF(NIF);
+        this.setContrasenia(contrasenia);
     }
 
     //GETTER/SETTER
@@ -103,24 +103,24 @@ public class Bibliotecario extends Persona {
 
     // resto de metodos
     /**
-     * metodo para rellenar datos del Bibliotecario, metodo de instancia
+     * metodo solicitarDatosPersona para rellenar datos al objeto ya creado
+     * primero llama al padre y rellena datos del objeto Persona
+     * despus rellena datos del Biblioteario
      */
     @Override
-    public void solicitarDatosPersona() {
+    public void solicitarDatosPersona() throws Exception{
         // primero llamamos alpadre y rellenamos dato de la persona
         super.solicitarDatosPersona();
         // solicitamos datos del bibliotecario
         System.out.println("Puesto de trabajo: ");
-        String nuevoPuestoTrabajo = sc.nextLine();
-        System.out.println("NIF: ");
-        String nuevoNIF = sc.nextLine();
-        System.out.println("Contraseña: ");
-        String nuevaContrasenia = sc.nextLine();
-        // inserteamos datos a la instancia del Bibliotecario
-        this.setPuestoTrabajo(nuevoPuestoTrabajo);
-        this.setNIF(nuevoNIF);
-        this.setContrasenia(nuevaContrasenia);
+        this.setPuestoTrabajo(sc.nextLine());
         
+        System.out.println("NIF: ");
+        this.setNIF(sc.nextLine());
+       
+        System.out.println("Contraseña: ");
+        this.setContrasenia(sc.nextLine());
+  
     }// fin metodo solicitarDatosPersona
 
     /**
